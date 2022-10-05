@@ -15,6 +15,8 @@ import { ComprasComponent } from './components/inventarios/compras/compras.compo
 import { VentasComponent } from './components/inventarios/ventas/ventas.component';
 import { AlmacenComponent } from './components/inventarios/almacen/almacen.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { EmpleadosComponent } from './pages/empleados/empleados.component';
+import { ClientesComponent } from './pages/clientes/clientes.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProveedoresComponent,
     ComprasComponent,
     VentasComponent,
-    AlmacenComponent
+    AlmacenComponent,
+    EmpleadosComponent,
+    ClientesComponent
     
   ],
   imports: [

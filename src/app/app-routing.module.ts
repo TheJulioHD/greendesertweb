@@ -4,7 +4,9 @@ import { AlmacenComponent } from './components/inventarios/almacen/almacen.compo
 import { ComprasComponent } from './components/inventarios/compras/compras.component';
 import { ProveedoresComponent } from './components/inventarios/proveedores/proveedores.component';
 import { VentasComponent } from './components/inventarios/ventas/ventas.component';
+import { ClientesComponent } from './pages/clientes/clientes.component';
 import { CotizacionComponent } from './pages/cotizacion/cotizacion.component';
+import { EmpleadosComponent } from './pages/empleados/empleados.component';
 import { HomeComponent } from './pages/home/home.component';
 import { IndexHomeComponent } from './pages/index-home/index-home.component';
 import { InventariosComponent } from './pages/inventarios/inventarios.component';
@@ -16,6 +18,8 @@ const routes: Routes = [
   {path:'home', component:HomeComponent},
   {path:'Login', component:LoginComponent},
   {path:'Index', component:IndexHomeComponent},
+  {path:'empleados', component:EmpleadosComponent},
+  {path:'cliente', component:ClientesComponent},
   {
     path:'Invetarios', component:InventariosComponent,
     children:[
