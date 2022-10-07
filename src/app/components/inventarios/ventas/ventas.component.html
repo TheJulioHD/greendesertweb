@@ -5,30 +5,43 @@
 <br>
 <div class="container">
 
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">add</button>
-<table class="table">
+  <div class="row">
+    <div class="col">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Agregar
+      </button><br>
+    </div>
+    <div class="col">
+      <button type="button" class="btn btn-primary">
+        Imprimir
+      </button><br>
+    </div>
+    <div class="col"></div>
+    <div class="col"></div>
+  </div><table class="table">
 <thead class="table-dark">
 <tr>
-   <th scope="col">item</th>
-   <th scope="col">Código</th>
-   <th scope="col">descipcion</th>
-   <th scope="col">unidad</th>
-   <th scope="col">cantidad</th>
-   <th scope="col">precio uni</th>
-   <th scope="col">iva</th>
-   <th scope="col">descuento</th>
+   <th scope="col">Item</th>
+   <th scope="col">Cliente</th>
+   <th scope="col">Materiales</th>
+   <th scope="col">Estado</th>
+   <th scope="col">direccion</th>
+   <th scope="col">telefono</th>
+   <th scope="col">Observaciones</th>
+   <th scope="col">Editar</th>
 </tr>
 </thead>
 <tbody>
-<tr *ngFor="let item of ltscompras">
+<tr >
    <th scope="row">1</th>
-   <td>uuid</td>
- <td>{{item.prov}}</td>
- <td>tuuid</td>
- <td>15</td>
- <td>20$</td>
- <td>16%</td>
- <td>0%</td>
+   <td>Juan</td>
+ <td>Pasto</td>
+ <td>Sonora</td>
+ <td>Av san martin 245</td>
+ <td>6624586241</td>
+ <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat sapiente tenetur rem fuga sit deleniti, amet ea, aspernatur, consectetur officia dolor commodi laboriosam deserunt accusamus ut? Corporis dignissimos voluptate cumque.</td>
+ <td> <button type="button" class="btn btn-primary">Editar</button> &nbsp;&nbsp;
+  <button type="button" class="btn btn-primary">Borrar</button> </td>
  
 </tr>
 
@@ -41,11 +54,11 @@
 <div class="modal-dialog">
 <div class="modal-content">
 <div class="modal-header">
- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+ <h1 class="modal-title fs-5" id="exampleModalLabel">Modal Agregar Ventas</h1>
  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-  <form (ngSubmit)="onSumit()">
+  
     <div class="row">
         <div class="col-md-4">
             <div class="mb-3">
@@ -54,7 +67,7 @@
                
               </div>
               <div class="mb-3">
-                <label for="exampleInputtext1" class="form-label">materiales:</label>
+                <label for="exampleInputtext1" class="form-label">Materiales:</label>
                 <input type="text" class="form-control" id="exampleInputtext1">
               </div>
               <div class="mb-3">
@@ -64,30 +77,23 @@
         </div>
         <div class="col-md-4">
             <div class="mb-3">
-                <label for="exampleInputtext1" class="form-label">direccion:</label>
+                <label for="exampleInputtext1" class="form-label">Direccion:</label>
                 <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
                 
               </div>
               <div class="mb-3">
-                <label for="exampleInputtext1" class="form-label">telefono:</label>
+                <label for="exampleInputtext1" class="form-label">Telefono:</label>
                 <input type="text" class="form-control" id="exampleInputtext1">
               </div>
-              <div class="mb-3">
-                  <label for="exampleInputtext1" class="form-label">Direccion de entrega:</label>
-                  <input type="text" class="form-control" id="exampleInputtext1">
-                </div>
+              
         </div>
     </div>
     <div class="mb-3">
         <label for="exampleInputtext1" class="form-label">Observaciones</label>
         <input type="text-area" class="form-control" id="exampleInputtext1">
       </div>
-    <div class="mb-3 form-check">
-      <input type="checkbox" class="form-check-input" id="exampleCheck1">
-      <label class="form-check-label" for="exampleCheck1">Check me out</label>
-    </div>
-    <button type="button" class="btn btn-primary">Submit</button>
-</form>
+    
+    
 </div>
 <div class="modal-footer">
  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

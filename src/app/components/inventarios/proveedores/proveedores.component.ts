@@ -11,5 +11,7 @@ export class ProveedoresComponent implements OnInit {
   
   ngOnInit(): void {
   }
-
+  onSumit(){
+    console.log("hola")
+  }
 }
