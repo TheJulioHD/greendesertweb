@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "greendesert-6ccf7": {
+      "hosting": {
+        "GreenDesert": [
+          "greendesert-6ccf7"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "greendesert-6ccf7"
+  }
+}
