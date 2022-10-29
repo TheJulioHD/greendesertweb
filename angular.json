@@ -94,6 +94,16 @@
             ],
             "scripts": []
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {
+            "prerender": false,
+            "ssr": false,
+            "browserTarget": "GreenDesert:build:production",
+            "firebaseProject": "greendesert-6ccf7",
+            "firebaseHostingSite": "greendesert-6ccf7"
+          }
         }
       }
     }

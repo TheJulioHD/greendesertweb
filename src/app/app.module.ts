@@ -17,6 +17,12 @@ import { AlmacenComponent } from './components/inventarios/almacen/almacen.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmpleadosComponent } from './pages/empleados/empleados.component';
 import { ClientesComponent } from './pages/clientes/clientes.component';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
 
 @NgModule({
   declarations: [
@@ -40,7 +46,12 @@ import { ClientesComponent } from './pages/clientes/clientes.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    AngularFirestoreModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore())
   ],
   providers: [],
   bootstrap: [AppComponent]
