@@ -15,7 +15,7 @@ export class ClientesComponent implements OnInit {
   id!: string | null;
   constructor(private clienteService: ClientesserviceService,
               private fb: FormBuilder) {
-      this.ltsCliente = this.fb.group({
+        this.ltsCliente = this.fb.group({
         Nombre:['', Validators.required],
         Apellido:['', Validators.required],
         Direccion:['', Validators.required],
