@@ -1,3 +1,4 @@
+import { AlmacenserviceService } from 'src/app/services/almacenservice.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CotizacionserviceService } from 'src/app/services/cotizacionservice.service';
@@ -11,10 +12,12 @@ import Swal from 'sweetalert2';
 export class CotizacionComponent implements OnInit {
   ltsCotizacion: FormGroup;
   ltsCotizaciones: any[]= []
+  ltsalmacen: any[]= []
   submited=false;
   id!: string | null;
   constructor(private CotizarService : CotizacionserviceService,
-    private fb: FormBuilder) { 
+              private fb: FormBuilder,
+              private almacen: AlmacenserviceService) { 
         this.ltsCotizacion = this.fb.group({
           email:['', Validators.required],
           Nombres:['', Validators.required],
@@ -29,6 +32,15 @@ export class CotizacionComponent implements OnInit {
       this.ltsCotizaciones = [];
       data.forEach((element: any) => {
         this.ltsCotizaciones.push({
+          id: element.payload.doc.id,
+          ...element.payload.doc.data()
+        })
+      });
+    })
+    this.almacen.getall().subscribe(data =>{
+      this.ltsalmacen = [];
+      data.forEach((element: any) => {
+        this.ltsalmacen.push({
           id: element.payload.doc.id,
           ...element.payload.doc.data()
         })
