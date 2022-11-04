@@ -32,16 +32,16 @@
 </tr>
 </thead>
 <tbody>
-<tr >
+<tr *ngFor="let item of ltsventas">
    <th scope="row">1</th>
-   <td>Juan</td>
- <td>Pasto</td>
- <td>Sonora</td>
- <td>Av san martin 245</td>
- <td>6624586241</td>
- <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat sapiente tenetur rem fuga sit deleniti, amet ea, aspernatur, consectetur officia dolor commodi laboriosam deserunt accusamus ut? Corporis dignissimos voluptate cumque.</td>
- <td> <button type="button" class="btn btn-primary">Editar</button> &nbsp;&nbsp;
-  <button type="button" class="btn btn-primary">Borrar</button> </td>
+   <td>{{item.Cliente}}</td>
+ <td>{{item.Direccion}}</td>
+ <td>{{item.materiales}}</td>
+ <td>{{item.estado}}</td>
+ <td>{{item.telefono}}</td>
+ <td>{{item.observaciones}}</td>
+ <td> <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2" (click)="esEditar(item.id)">Editar</button> &nbsp;&nbsp;
+  <button type="button" class="btn btn-primary" (click)="Eliminarventas(item.id)">Borrar</button> </td>
  
 </tr>
 
@@ -58,47 +58,104 @@
  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-  
+  <form [formGroup]="ltsventa" (ngSubmit)="agregarventas()">
+
     <div class="row">
         <div class="col-md-4">
             <div class="mb-3">
                 <label for="exampleInputtext1" class="form-label">Cliente:</label>
-                <input type="text"  class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                <input type="text" formControlName="Cliente"  class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
                
               </div>
               <div class="mb-3">
                 <label for="exampleInputtext1" class="form-label">Materiales:</label>
-                <input type="text" class="form-control" id="exampleInputtext1">
+                <input type="text" formControlName="materiales"  class="form-control" id="exampleInputtext1">
               </div>
               <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">Estado:</label>
-                  <input type="text" class="form-control" id="exampleInputtext1">
+                  <input type="text" formControlName="estado"  class="form-control" id="exampleInputtext1">
                 </div>
         </div>
         <div class="col-md-4">
             <div class="mb-3">
                 <label for="exampleInputtext1" class="form-label">Direccion:</label>
-                <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                <input type="text" formControlName="Direccion"  class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
                 
               </div>
               <div class="mb-3">
                 <label for="exampleInputtext1" class="form-label">Telefono:</label>
-                <input type="text" class="form-control" id="exampleInputtext1">
+                <input type="text" formControlName="telefono"  class="form-control" id="exampleInputtext1">
               </div>
               
         </div>
     </div>
     <div class="mb-3">
         <label for="exampleInputtext1" class="form-label">Observaciones</label>
-        <input type="text-area" class="form-control" id="exampleInputtext1">
+        <input type="text-area" formControlName="observaciones"  class="form-control" id="exampleInputtext1">
       </div>
     
+      <button type="submit" class="btn btn-primary">Save changes</button>
+    </form>
     
 </div>
 <div class="modal-footer">
  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
- <button type="button" class="btn btn-primary">Save changes</button>
 </div>
 </div>
 </div>
 </div>
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+  <div class="modal-header">
+   <h1 class="modal-title fs-5" id="exampleModalLabel">Modal Agregar Ventas</h1>
+   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="ltsventa" (ngSubmit)="agregareditarventas()">
+  
+      <div class="row">
+          <div class="col-md-4">
+              <div class="mb-3">
+                  <label for="exampleInputtext1" class="form-label">Cliente:</label>
+                  <input type="text" formControlName="Cliente"  class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                 
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputtext1" class="form-label">Materiales:</label>
+                  <input type="text" formControlName="materiales"  class="form-control" id="exampleInputtext1">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleInputtext1" class="form-label">Estado:</label>
+                    <input type="text" formControlName="estado"  class="form-control" id="exampleInputtext1">
+                  </div>
+          </div>
+          <div class="col-md-4">
+              <div class="mb-3">
+                  <label for="exampleInputtext1" class="form-label">Direccion:</label>
+                  <input type="text" formControlName="Direccion"  class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                  
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputtext1" class="form-label">Telefono:</label>
+                  <input type="text" formControlName="telefono"  class="form-control" id="exampleInputtext1">
+                </div>
+                
+          </div>
+      </div>
+      <div class="mb-3">
+          <label for="exampleInputtext1" class="form-label">Observaciones</label>
+          <input type="text-area" formControlName="observaciones"  class="form-control" id="exampleInputtext1">
+        </div>
+      
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </form>
+      
+  </div>
+  <div class="modal-footer">
+   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+  </div>
+  </div>
+  </div>
+  </div>
