@@ -1,47 +1,4 @@
 <div class="container">
-           <form (ngSubmit)="onSumit()">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="exampleInputtext1" class="form-label">Proveedor:</label>
-                            <input type="text" [(ngModel)]="compras.prov" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
-                           
-                          </div>
-                          <div class="mb-3">
-                            <label for="exampleInputtext1" class="form-label">Bodega:</label>
-                            <input type="text" class="form-control" id="exampleInputtext1">
-                          </div>
-                          <div class="mb-3">
-                              <label for="exampleInputtext1" class="form-label">Estado:</label>
-                              <input type="text" class="form-control" id="exampleInputtext1">
-                            </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="mb-3">
-                            <label for="exampleInputtext1" class="form-label">Quien lo solicita:</label>
-                            <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
-                            
-                          </div>
-                          <div class="mb-3">
-                            <label for="exampleInputtext1" class="form-label">Quien lo autoriza:</label>
-                            <input type="text" class="form-control" id="exampleInputtext1">
-                          </div>
-                          <div class="mb-3">
-                              <label for="exampleInputtext1" class="form-label">Direccion de entrega:</label>
-                              <input type="text" class="form-control" id="exampleInputtext1">
-                            </div>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label for="exampleInputtext1" class="form-label">Observaciones</label>
-                    <input type="text-area" class="form-control" id="exampleInputtext1">
-                  </div>
-                <div class="mb-3 form-check">
-                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                  <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                </div>
-                <button type="button" class="btn btn-primary">Agregar Compra</button>
-      </form>
 </div><br>
 
 <br>
@@ -63,27 +20,34 @@
   <table class="table">
     <thead class="table-dark">
       <tr>
-          <th scope="col">item</th>
+        <th scope="col">Proveedor</th>
+        <th scope="col">Matrial</th>
           <th scope="col">Código</th>
-          <th scope="col">descipcion</th>
-          <th scope="col">unidad</th>
-          <th scope="col">cantidad</th>
-          <th scope="col">precio uni</th>
-          <th scope="col">iva</th>
-          <th scope="col">descuento</th>
+          <th scope="col">Descipcion</th>
+          <th scope="col">Unidad</th>
+          <th scope="col">Cantidad</th>
+          <th scope="col">Precio uni</th>
+          <th scope="col">Iva</th>
+          <th scope="col">Descuento</th>
+          <th scope="col">Acciones</th>
     </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of ltscompras">
-          <th scope="row">1</th>
-          <td>uuid</td>
-        <td>{{item.prov}}</td>
-        <td>tuuid</td>
-        <td>15</td>
-        <td>20$</td>
-        <td>16%</td>
-        <td>0%</td>
-        
+          
+          <td>{{item.Proveedor}}</td>
+        <td>{{item.Material}}</td>
+        <td>{{item.coddigo}}</td>
+        <td>{{item.descipcion}}</td>
+        <td>{{item.unidad}}</td>
+        <td>{{item.cantidad}}</td>
+        <td>{{item.preciouni}}</td>
+        <td>{{item.descuento}}</td>
+        <td>{{item.iva}}</td>
+        <td>
+          <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal2" (click)="esEditar(item.id)">editar</button> &nbsp;&nbsp;
+          <button class="btn btn-primary" (click)="eliminarCompra(item.id)">borrar</button>
+        </td>
       </tr>
      
     </tbody>
@@ -91,7 +55,7 @@
 </div>
   
     <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -99,53 +63,133 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        
+        <form [formGroup]="compras" (ngSubmit)="agregarCompra()">
+
           <div class="row">
               <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="exampleInputtext1" class="form-label">Proveedor:</label>
+                  <select class="form-select" aria-label="Default select example" *ngFor="let item of ltsproveedores">
+                    <option selected>seleccione un proveedor</option>
+                    <option formArrayName="Proveedor">{{item.Nombre}}</option>
+                  </select>
+                 
+                </div>
                   <div class="mb-3">
-                      <label for="exampleInputtext1" class="form-label">item:</label>
-                      <input type="text" [(ngModel)]="compras.prov" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                      <label for="exampleInputtext1" class="form-label">material:</label>
+                      <input type="text" formControlName="Material" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
                      
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputtext1" class="form-label">codigo:</label>
-                      <input type="text" class="form-control" id="exampleInputtext1">
+                      <input type="text" formControlName="coddigo" class="form-control" id="exampleInputtext1">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputtext1" class="form-label">Descripcion:</label>
-                        <input type="text" class="form-control" id="exampleInputtext1">
+                        <input type="text" formControlName="descipcion" class="form-control" id="exampleInputtext1">
                       </div>
               </div>
               <div class="col-md-4">
                   <div class="mb-3">
                       <label for="exampleInputtext1" class="form-label">unidad</label>
-                      <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                      <input type="text" formControlName="unidad" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
                       
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputtext1" class="form-label">cantidad:</label>
-                      <input type="text" class="form-control" id="exampleInputtext1">
+                      <input type="text" formControlName="cantidad" class="form-control" id="exampleInputtext1">
                     </div>
                     <div class="mb-3">
-                        <label for="exampleInputtext1" class="form-label">Precio uni:</label>
-                        <input type="text" class="form-control" id="exampleInputtext1">
-                      </div>
-              </div>
-          </div>
-          <div class="mb-3">
-              <label for="exampleInputtext1" class="form-label">iva</label>
-              <input type="text-area" class="form-control" id="exampleInputtext1">
-            </div>
-            <div class="mb-3">
-              <label for="exampleInputtext1" class="form-label">descuento</label>
-              <input type="text-area" class="form-control" id="exampleInputtext1">
-            </div>
+                      <label for="exampleInputtext1" class="form-label">Precio uni:</label>
+                      <input type="text" formControlName="preciouni" class="form-control" id="exampleInputtext1">
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputtext1" class="form-label">iva</label>
+                  <input type="text-area" formControlName="iva" class="form-control" id="exampleInputtext1">
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputtext1" class="form-label">descuento</label>
+                  <input type="text-area" formControlName="descuento" class="form-control" id="exampleInputtext1">
+                </div>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </form>
           
           
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal Editar Compra</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="compras" (ngSubmit)="agregareditarCompra()">
+
+          <div class="row">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label for="exampleInputtext1" class="form-label">Proveedor:</label>
+                  <select class="form-select" aria-label="Default select example" *ngFor="let item of ltsproveedores">
+                    <option selected>seleccione un proveedor</option>
+                    <option formArrayName="Proveedor">{{item.Nombre}}</option>
+                  </select>
+                 
+                </div>
+                  <div class="mb-3">
+                      <label for="exampleInputtext1" class="form-label">material:</label>
+                      <input type="text" formControlName="Material" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                     
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleInputtext1" class="form-label">codigo:</label>
+                      <input type="text" formControlName="coddigo" class="form-control" id="exampleInputtext1">
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputtext1" class="form-label">Descripcion:</label>
+                        <input type="text" formControlName="descipcion" class="form-control" id="exampleInputtext1">
+                      </div>
+              </div>
+              <div class="col-md-4">
+                  <div class="mb-3">
+                      <label for="exampleInputtext1" class="form-label">unidad</label>
+                      <input type="text" formControlName="unidad" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                      
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleInputtext1" class="form-label">cantidad:</label>
+                      <input type="text" formControlName="cantidad" class="form-control" id="exampleInputtext1">
+                    </div>
+                    <div class="mb-3">
+                      <label for="exampleInputtext1" class="form-label">Precio uni:</label>
+                      <input type="text" formControlName="preciouni" class="form-control" id="exampleInputtext1">
+                    </div>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputtext1" class="form-label">iva</label>
+                  <input type="text-area" formControlName="iva" class="form-control" id="exampleInputtext1">
+                </div>
+                <div class="mb-3">
+                  <label for="exampleInputtext1" class="form-label">descuento</label>
+                  <input type="text-area" formControlName="descuento" class="form-control" id="exampleInputtext1">
+                </div>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+              </form>
+          
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
