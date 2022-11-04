@@ -141,7 +141,7 @@
                   <label for="exampleInputtext1" class="form-label">Proveedor:</label>
                   <select class="form-select" aria-label="Default select example" *ngFor="let item of ltsproveedores">
                     <option selected>seleccione un proveedor</option>
-                    <option formArrayName="Proveedor">{{item.Nombre}}</option>
+                    <option formControlName="Proveedor">{{item.Nombre}}</option>
                   </select>
                  
                 </div>
