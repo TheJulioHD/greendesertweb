@@ -29,16 +29,16 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr *ngFor="let item of ltsalmacenes">
             <th scope="row">1</th>
-            <td>Pasto</td>
-            <td>195sc</td>
-            <td>prueba</td>
-            <td>15%</td>
-            <td>activo</td>
-            <td>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Magnam, expedita. Incidunt dicta quisquam corrupti voluptatem eligendi necessitatibus temporibus? Error dicta et recusandae suscipit repudiandae. Labore vitae officia animi molestiae amet!</td>
-            <td> <button class="btn btn-primary">editar</button> &nbsp;&nbsp;
-              <button class="btn btn-primary">borrar</button> </td>
+            <td>{{item.Material}}</td>
+            <td>{{item.coddigo}}</td>
+            <td>{{item.Proveedor}}</td>
+            <td>{{item.cantidad}}<td>
+            <td>{{item.estatus}}</td>
+            <td>{{item.observaciones}}</td>
+            <td> <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal2" (click)="esEditar(item.id)">editar</button> &nbsp;&nbsp;
+              <button class="btn btn-primary" (click)="Eliminaralmacen(item.id)">borrar</button>  </td>
           </tr>
           
         </tbody>
@@ -54,47 +54,106 @@
    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
   </div>
   <div class="modal-body">
-    
+    <form [formGroup]="ltsalmacen" (ngSubmit)="agregaralmacen()">
+
       <div class="row">
           <div class="col-md-4">
               <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">Material:</label>
-                  <input type="text"  class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                  <input type="text" formControlName="Material" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
                  
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">Codigo:</label>
-                  <input type="text" class="form-control" id="exampleInputtext1">
+                  <input type="text" formControlName="coddigo" class="form-control" id="exampleInputtext1">
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputtext1" class="form-label">Proveedor:</label>
-                    <input type="text" class="form-control" id="exampleInputtext1">
+                  <input type="text" formControlName="Proveedor"  class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                   
                   </div>
           </div>
           <div class="col-md-4">
               <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">Cantidad:</label>
-                  <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                  <input type="text" formControlName="cantidad" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
                   
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">Estatus:</label>
-                  <input type="text" class="form-control" id="exampleInputtext1">
+                  <input type="text" formControlName="estatus" class="form-control" id="exampleInputtext1">
                 </div>
                 
           </div>
       </div>
       <div class="mb-3">
           <label for="exampleInputtext1" class="form-label">Observaciones</label>
-          <input type="text-area" class="form-control" id="exampleInputtext1">
+          <input type="text-area" formControlName="observaciones" class="form-control" id="exampleInputtext1">
         </div>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </form>
       
       
   </div>
   <div class="modal-footer">
    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-   <button type="button" class="btn btn-primary">Save changes</button>
   </div>
   </div>
   </div>
   </div>
+
+  <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel2" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+     <h1 class="modal-title fs-5" id="exampleModalLabel">Modal Agregar Almacen</h1>
+     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    <div class="modal-body">
+      <form [formGroup]="ltsalmacen" (ngSubmit)="agregareditaralmacen()">
+  
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label for="exampleInputtext1" class="form-label">Material:</label>
+                    <input type="text" formControlName="Material" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                   
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputtext1" class="form-label">Codigo:</label>
+                    <input type="text" formControlName="coddigo" class="form-control" id="exampleInputtext1">
+                  </div>
+                  <div class="mb-3">
+                      <label for="exampleInputtext1" class="form-label">Proveedor:</label>
+                    <input type="text" formControlName="Proveedor"  class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                     
+                    </div>
+            </div>
+            <div class="col-md-4">
+                <div class="mb-3">
+                    <label for="exampleInputtext1" class="form-label">Cantidad:</label>
+                    <input type="text" formControlName="cantidad" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                    
+                  </div>
+                  <div class="mb-3">
+                    <label for="exampleInputtext1" class="form-label">Estatus:</label>
+                    <input type="text" formControlName="estatus" class="form-control" id="exampleInputtext1">
+                  </div>
+                  
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputtext1" class="form-label">Observaciones</label>
+            <input type="text-area" formControlName="observaciones" class="form-control" id="exampleInputtext1">
+          </div>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </form>
+        
+        
+    </div>
+    <div class="modal-footer">
+     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    </div>
+    </div>
+    </div>
+    </div>

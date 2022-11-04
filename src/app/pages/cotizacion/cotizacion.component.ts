@@ -16,12 +16,14 @@ export class CotizacionComponent implements OnInit {
   constructor(private CotizarService : CotizacionserviceService,
     private fb: FormBuilder) { 
         this.ltsCotizacion = this.fb.group({
-        Nombres:['', Validators.required],
+          email:['', Validators.required],
+          Nombres:['', Validators.required],
         Apellidos:['', Validators.required],
         Direccion:['', Validators.required],
         Telefono:['', Validators.required],
         MontoMax: ['', Validators.required],
-        MontoMin: ['', Validators.required]
+        MontoMin: ['', Validators.required],
+        Material: ['', Validators.required]
     })
     this.CotizarService.getall().subscribe(data =>{
       this.ltsCotizaciones = [];
@@ -43,12 +45,14 @@ export class CotizacionComponent implements OnInit {
 
   agregarCotiza(){
     const Cotizas: any={
+      email: this.ltsCotizacion.value.email,
       Nombres: this.ltsCotizacion.value.Nombres,
       Apellidos: this.ltsCotizacion.value.Apellidos,
       Direccion: this.ltsCotizacion.value.Direccion,
       Telefono: this.ltsCotizacion.value.Telefono,
       MontoMax: this.ltsCotizacion.value.MontoMax,
-      MontoMin: this.ltsCotizacion.value.MontoMin
+      MontoMin: this.ltsCotizacion.value.MontoMin,
+      Material: this.ltsCotizacion.value.Material
       
     }
     this.CotizarService.agregarCotizacion(Cotizas).then(()=>{
@@ -76,12 +80,14 @@ export class CotizacionComponent implements OnInit {
 
   editarCotiza(id:string){
     const Cotizas: any={
+      email: this.ltsCotizacion.value.email,
       Nombres: this.ltsCotizacion.value.Nombres,
       Apellidos: this.ltsCotizacion.value.Apellidos,
       Direccion: this.ltsCotizacion.value.Direccion,
       Telefono: this.ltsCotizacion.value.Telefono,
       MontoMax: this.ltsCotizacion.value.MontoMax,
-      MontoMin: this.ltsCotizacion.value.MontoMin
+      MontoMin: this.ltsCotizacion.value.MontoMin,
+      Material: this.ltsCotizacion.value.Material
     }
     this.CotizarService.updateCotizacion(id, Cotizas).then(() =>{
       if(Cotizas ==null){
@@ -108,12 +114,14 @@ export class CotizacionComponent implements OnInit {
     this.CotizarService.getCotizacion(id).subscribe(data =>{
       console.log(data.payload.data()['Nombres']);
       this.ltsCotizacion.setValue({
+        email: data.payload.data()['email'],
         Nombres: data.payload.data()['Nombres'],
         Apellidos: data.payload.data()['Apellidos'],
         Direccion: data.payload.data()['Direccion'],
         Telefono: data.payload.data()['Teléfono'],
         MontoMax: data.payload.data()['Monto Máximo'],
-        MontoMin: data.payload.data()['Monto Mínimo']
+        MontoMin: data.payload.data()['Monto Mínimo'],
+        Material: data.payload.data()['Material']
       })
     })
   }
