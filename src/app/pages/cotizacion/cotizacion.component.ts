@@ -1,6 +1,6 @@
 import { AlmacenserviceService } from 'src/app/services/almacenservice.service';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CotizacionserviceService } from 'src/app/services/cotizacionservice.service';
 import Swal from 'sweetalert2';
 
@@ -18,16 +18,7 @@ export class CotizacionComponent implements OnInit {
   constructor(private CotizarService : CotizacionserviceService,
               private fb: FormBuilder,
               private almacen: AlmacenserviceService) { 
-        this.ltsCotizacion = this.fb.group({
-          email:['', Validators.required],
-          Nombres:['', Validators.required],
-        Apellidos:['', Validators.required],
-        Direccion:['', Validators.required],
-        Telefono:['', Validators.required],
-        MontoMax: ['', Validators.required],
-        MontoMin: ['', Validators.required],
-        Material: ['', Validators.required]
-    })
+        this.ltsCotizacion = this.createForm();
     this.CotizarService.getall().subscribe(data =>{
       this.ltsCotizaciones = [];
       data.forEach((element: any) => {
@@ -48,14 +39,38 @@ export class CotizacionComponent implements OnInit {
     })
   }
 
-  
+createForm(){
+  return new FormGroup({
 
+    email: new FormControl('',   [Validators.required, Validators.minLength(5)]),
+    Nombres:new FormControl('', [Validators.required, Validators.minLength(3)]),
+    Apellidos:new FormControl('', [Validators.required, Validators.minLength(3)]),
+    Direccion:new FormControl('', [Validators.required, Validators.minLength(20)]),
+    Telefono:new FormControl('',  [Validators.required, Validators.minLength(10), Validators.maxLength(10),Validators.pattern(/^[1-9]\d{6,10}$/)]),
+    MontoMax: new FormControl('', [Validators.required,Validators.pattern(/^[1-9]\d{6,10}$/)]),
+    MontoMin:new FormControl ('', [Validators.required,Validators.pattern(/^[1-9]\d{6,10}$/)]),
+    Material:new FormControl ('', [Validators.required])
+  })
+}
+
+onResetForm(){
+  this.ltsCotizacion.reset();
+}
+get email() { return this.ltsCotizacion.get('email'); }
+get Nombres() { return this.ltsCotizacion.get('Nombres'); }
+get Apellidos() { return this.ltsCotizacion.get('Apellidos'); }
+get Direccion() { return this.ltsCotizacion.get('Direccion'); }
+get Telefono() { return this.ltsCotizacion.get('Telefono'); }
+get MontoMax() { return this.ltsCotizacion.get('MontoMax'); }
+get MontoMin() { return this.ltsCotizacion.get('MontoMin'); }
+get Material() { return this.ltsCotizacion.get('Material'); }
   show = false
 
   ngOnInit(): void {
   }
 
   agregarCotiza(){
+    
     const Cotizas: any={
       email: this.ltsCotizacion.value.email,
       Nombres: this.ltsCotizacion.value.Nombres,
@@ -67,27 +82,28 @@ export class CotizacionComponent implements OnInit {
       Material: this.ltsCotizacion.value.Material
       
     }
-    this.CotizarService.agregarCotizacion(Cotizas).then(()=>{
-      if(Cotizas==null){
+    if(this.ltsCotizacion.valid){
+      this.CotizarService.agregarCotizacion(Cotizas).then(()=>{
+          this.onResetForm();
           Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Datos Incorectos',
-            footer: 'ingrese los datos correctos'
+            position: 'top-end',
+            icon: 'success',
+            title: 'Cotiza registrada',
+            showConfirmButton: false,
+            timer: 1500
           })
-      }else{
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Cotiza registrada',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
-      
-    }).catch(error =>{
-      console.log(error)
-    })
+      }).catch(error =>{
+        console.log(error)
+      })
+    }else[
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Datos Incorectos',
+        footer: 'ingrese los datos correctos'
+      })
+    ]
+    
   }
 
   editarCotiza(id:string){
@@ -99,7 +115,7 @@ export class CotizacionComponent implements OnInit {
       Telefono: this.ltsCotizacion.value.Telefono,
       MontoMax: this.ltsCotizacion.value.MontoMax,
       MontoMin: this.ltsCotizacion.value.MontoMin,
-      Material: this.ltsCotizacion.value.Material
+      Material:  this.ltsCotizacion.value.Material
     }
     this.CotizarService.updateCotizacion(id, Cotizas).then(() =>{
       if(Cotizas ==null){
@@ -152,25 +168,27 @@ export class CotizacionComponent implements OnInit {
   }
 
   EliminarCotiza(id:string){
-    this.CotizarService.eliminarCotizacion(id).then(()=>{
-      Swal.fire({
-        title: 'Advertencia',
-        text: "Una vez hecho esto, no será posible revertirlo",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, eliminar'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Eliminado',
-            'La cotiza ha sido eliminada con éxito',
-            'success'
-          )
-        }
-      })
+    Swal.fire({
+      title: 'Advertencia',
+      text: "Una vez hecho esto, no será posible revertirlo",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Eliminado',
+          'La cotiza ha sido eliminada con éxito',
+          'success'
+        )
+        this.CotizarService.eliminarCotizacion(id).then(()=>{
+      
+        })
+      }
     })
+    
   }
   /*
   onSubmit(){

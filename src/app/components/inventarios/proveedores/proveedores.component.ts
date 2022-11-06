@@ -36,6 +36,9 @@ export class ProveedoresComponent implements OnInit {
   
   ngOnInit(): void {
   }
+  onResetForm(){
+    this.ltsproveedor.reset()
+  }
   agregareditarproveedor(){
     this.submited= true;
     if(this.ltsproveedor.invalid){
@@ -72,27 +75,29 @@ export class ProveedoresComponent implements OnInit {
       telefono:this.ltsproveedor.value.telefono,
       status:this.ltsproveedor.value.status,
     }
-    this.proveedoresservice.agregarproveedor(proveedor).then(()=>{
-      if(proveedor==null){
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Datos Incorectos',
-          footer: 'ingrese los datos corectos'
-        })
-      }else{
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Empleado Registrado',
-          showConfirmButton: false,
-          timer: 1500
-        }).catch(error =>{
-          console.log(error)
-        })
-      }
-      
-    })
+    if(this.ltsproveedor.valid){
+      this.proveedoresservice.agregarproveedor(proveedor).then(()=>{
+        this.onResetForm()
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Empleado Registrado',
+            showConfirmButton: false,
+            timer: 1500
+          }).catch(error =>{
+            console.log(error)
+          })
+        
+        
+      })
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Datos Incorectos',
+        footer: 'ingrese los datos corectos'
+      })
+    }
   }
 
   editarProveedor(id:string){
@@ -104,46 +109,50 @@ export class ProveedoresComponent implements OnInit {
       telefono:this.ltsproveedor.value.telefono,
       status:this.ltsproveedor.value.status,
     }
-    this.proveedoresservice.updateproveedor(id, proveedor).then(() =>{
-      if(proveedor ==null){
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Datos Incorectos',
-          footer: 'ingrese los datos corectos'
-        })
-      }else{
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Empleado Actulizado',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
-    })
+    if(this.ltsproveedor.valid){
+      this.proveedoresservice.updateproveedor(id, proveedor).then(() =>{
+        this.onResetForm()
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Empleado Actulizado',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        
+      })
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Datos Incorectos',
+        footer: 'ingrese los datos corectos'
+      })
+    }
   }
 
   EliminarProveedor(id:string){
-    this.proveedoresservice.eliminarEmpledo(id).then(()=>{
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          )
-        }
-      })
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+        this.proveedoresservice.eliminarEmpledo(id).then(()=>{
+      
+        })
+      }
     })
+    
   }
   onSumit(){
     console.log("hola")

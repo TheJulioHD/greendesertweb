@@ -20,15 +20,15 @@ export class ComprasComponent implements OnInit {
               private fb: FormBuilder,
               private comprasService: ComprasserviceService) {
                 this.compras = this.fb.group({
-                  Proveedor:['', Validators.required],
-                  Material:['', Validators.required],
-                  coddigo:['', Validators.required],
-                  unidad:['', Validators.required],
-                  cantidad:['', Validators.required],
-                  preciouni:['', Validators.required],
-                  descipcion:['', Validators.required],
-                  descuento:['', Validators.required],
-                  iva:['', Validators.required],
+                  Proveedor:['',  [Validators.required, Validators.minLength(3)]],
+                  Material:['',   [Validators.required, Validators.minLength(3)]],
+                  coddigo:['',    [Validators.required, Validators.minLength(4)]],
+                  unidad:['',     [Validators.required, Validators.minLength(1),Validators.pattern(/^[1-9]\d{6,10}$/)]],
+                  cantidad:['',   [Validators.required, Validators.minLength(1),Validators.pattern(/^[1-9]\d{6,10}$/)]],
+                  preciouni:['',  [Validators.required, Validators.minLength(1),Validators.pattern(/^[1-9]\d{6,10}$/)]],
+                  descipcion:['', [Validators.required, Validators.minLength(10) ]],
+                  descuento:['',  [Validators.required, Validators.minLength(1), Validators.pattern(/^[1-9]\d{6,10}$/)]],
+                  iva:['',        [Validators.required, Validators.minLength(1),Validators.pattern(/^[1-9]\d{6,10}$/)]],
                 })
                 this.proveedoresservice.getall().subscribe( data =>{
                   this.ltsproveedores=[]
@@ -52,6 +52,9 @@ export class ComprasComponent implements OnInit {
                }
   
   ngOnInit(): void {
+  }
+  onResetForm(){
+    this.compras.reset()
   }
 
   agregareditarCompra(){
@@ -85,7 +88,7 @@ export class ComprasComponent implements OnInit {
     })
   }
   agregarCompra(){
-    const compras: any={
+    const compra: any={
 
       Proveedor:this.compras.value.Proveedor,
       Material:this.compras.value.Material,
@@ -97,27 +100,29 @@ export class ComprasComponent implements OnInit {
       descuento:this.compras.value.descuento,
       iva:this.compras.value.iva,
     }
-    this.comprasService.agregarcompras(compras).then(()=>{
-      if(compras==null){
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Datos Incorectos',
-          footer: 'ingrese los datos corectos'
-        })
-      }else{
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Empleado Registrado',
-          showConfirmButton: false,
-          timer: 1500
-        }).catch(error =>{
-          console.log(error)
-        })
-      }
-      
-    })
+    if(this.compras.valid){
+      this.comprasService.agregarcompras(compra).then(()=>{
+        this.onResetForm()
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Empleado Registrado',
+            showConfirmButton: false,
+            timer: 1500
+          }).catch(error =>{
+            console.log(error)
+          })
+        
+        
+      })
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Datos Incorectos',
+        footer: 'ingrese los datos corectos'
+      })
+    }
   }
 
   editarCompra(id:string){
@@ -132,15 +137,9 @@ export class ComprasComponent implements OnInit {
       descuento:this.compras.value.descuento,
       iva:this.compras.value.iva,
     }
+   if(this.compras.valid){
     this.proveedoresservice.updateproveedor(id, compras).then(() =>{
-      if(compras ==null){
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Datos Incorectos',
-          footer: 'ingrese los datos corectos'
-        })
-      }else{
+      
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -148,29 +147,39 @@ export class ComprasComponent implements OnInit {
           showConfirmButton: false,
           timer: 1500
         })
-      }
+      
     })
+   }else{
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Datos Incorectos',
+      footer: 'ingrese los datos corectos'
+    })
+   }
   }
 
   eliminarCompra(id:string){
-    this.comprasService.eliminarcompras(id).then(()=>{
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          )
-        }
-      })
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+        this.comprasService.eliminarcompras(id).then(()=>{
+      
+        })
+      }
     })
+    
   }
 }
