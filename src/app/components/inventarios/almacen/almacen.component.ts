@@ -19,12 +19,12 @@ export class AlmacenComponent implements OnInit {
                private fb: FormBuilder,
                private provedoresservice: ProveedorserviceService) { 
                 this.ltsalmacen = this.fb.group({
-                  Proveedor:['', Validators.required],
-                  Material:['', Validators.required],
-                  coddigo:['', Validators.required],
-                  cantidad:['', Validators.required],
-                  estatus:['', Validators.required],
-                  observaciones:['', Validators.required],
+                  Proveedor:['',      [Validators.required, Validators.minLength(3)]],
+                  Material:['',       [Validators.required, Validators.minLength(3)]],
+                  coddigo:['',        [Validators.required, Validators.minLength(4)]],
+                  cantidad:['',       [Validators.required, Validators.minLength(1)]],
+                  estatus:['',        [Validators.required, Validators.minLength(5)]],
+                  observaciones:['',  [Validators.required, Validators.minLength(10)]],
                 })
                 this.provedoresservice.getall().subscribe( data =>{
                   this.ltsproveedores=[]
@@ -47,6 +47,9 @@ export class AlmacenComponent implements OnInit {
                }
 
   ngOnInit(): void {
+  }
+  onResetForm(){
+    this.ltsalmacen.reset()
   }
   agregareditaralmacen(){
     this.submited= true;
@@ -84,27 +87,29 @@ export class AlmacenComponent implements OnInit {
       estatus:this.ltsalmacen.value.estatus,
       observaciones:this.ltsalmacen.value.observaciones,
     }
-    this.almacenSerice.agregaralmacen(almacen).then(()=>{
-      if(almacen==null){
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Datos Incorectos',
-          footer: 'ingrese los datos corectos'
-        })
-      }else{
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Empleado Registrado',
-          showConfirmButton: false,
-          timer: 1500
-        }).catch(error =>{
-          console.log(error)
-        })
-      }
-      
-    })
+    if(this.ltsalmacen.valid){
+      this.almacenSerice.agregaralmacen(almacen).then(()=>{
+       this.onResetForm()
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Empleado Registrado',
+            showConfirmButton: false,
+            timer: 1500
+          }).catch(error =>{
+            console.log(error)
+          })
+        
+        
+      })
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Datos Incorectos',
+        footer: 'ingrese los datos corectos'
+      })
+    }
   }
 
   editaralmacen(id:string){
@@ -116,46 +121,50 @@ export class AlmacenComponent implements OnInit {
       estatus:this.ltsalmacen.value.estatus,
       observaciones:this.ltsalmacen.value.observaciones,
     }
-    this.almacenSerice.updatealmacen(id, almacen).then(() =>{
-      if(almacen ==null){
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Datos Incorectos',
-          footer: 'ingrese los datos corectos'
-        })
-      }else{
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Empleado Actulizado',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
-    })
+    if(this.ltsalmacen.valid){
+      this.almacenSerice.updatealmacen(id, almacen).then(() =>{
+       this.onResetForm()
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Empleado Actulizado',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        
+      })
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Datos Incorectos',
+        footer: 'ingrese los datos corectos'
+      })
+    }
   }
 
   Eliminaralmacen(id:string){
-    this.almacenSerice.eliminaralmacen(id).then(()=>{
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          )
-        }
-      })
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+        this.almacenSerice.eliminaralmacen(id).then(()=>{
+     
+        })
+      }
     })
+    
   }
 
 }

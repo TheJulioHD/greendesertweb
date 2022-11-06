@@ -16,12 +16,12 @@ export class VentasComponent implements OnInit {
   constructor(private ventasservice: VentasserviceService,
                private fb: FormBuilder) { 
                 this.ltsventa = this.fb.group({
-                  Cliente:['', Validators.required],
-                  Direccion:['', Validators.required],
-                  materiales:['', Validators.required],
-                  estado:['', Validators.required],
-                  telefono:['', Validators.required],
-                  observaciones:['', Validators.required],
+                  Cliente:['',        [Validators.required, Validators.minLength(3)]],
+                  Direccion:['',      [Validators.required, Validators.minLength(3)]],
+                  materiales:['',     [Validators.required, Validators.minLength(3)]],
+                  estado:['',         [Validators.required, Validators.minLength(3)]],
+                  telefono:['',       [Validators.required, Validators.minLength(3)]],
+                  observaciones:['',  [Validators.required, Validators.minLength(3)]],
                 })
                 this.ventasservice.getall().subscribe( data =>{
                   this.ltsventas=[]
@@ -35,6 +35,9 @@ export class VentasComponent implements OnInit {
                }
   
   ngOnInit(): void {
+  }
+  onResetForm(){
+    this.ltsventa.reset()
   }
   agregareditarventas(){
     this.submited= true;
@@ -72,27 +75,29 @@ export class VentasComponent implements OnInit {
       telefono:this.ltsventa.value.telefono,
       observaciones:this.ltsventa.value.observaciones,
     }
-    this.ventasservice.agregarventas(ventas).then(()=>{
-      if(ventas==null){
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Datos Incorectos',
-          footer: 'ingrese los datos corectos'
-        })
-      }else{
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Empleado Registrado',
-          showConfirmButton: false,
-          timer: 1500
-        }).catch(error =>{
-          console.log(error)
-        })
-      }
-      
-    })
+    if(this.ltsventa.valid){
+      this.ventasservice.agregarventas(ventas).then(()=>{
+        this.onResetForm()
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Empleado Registrado',
+            showConfirmButton: false,
+            timer: 1500
+          }).catch(error =>{
+            console.log(error)
+          })
+        
+        
+      })
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Datos Incorectos',
+        footer: 'ingrese los datos corectos'
+      })
+    }
   }
 
   editarventas(id:string){
@@ -104,45 +109,50 @@ export class VentasComponent implements OnInit {
       telefono:this.ltsventa.value.telefono,
       observaciones:this.ltsventa.value.observaciones,
     }
-    this.ventasservice.updateventas(id, ventas).then(() =>{
-      if(ventas ==null){
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Datos Incorectos',
-          footer: 'ingrese los datos corectos'
-        })
-      }else{
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Empleado Actulizado',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
-    })
+    if(this.ltsventa.valid){
+      this.ventasservice.updateventas(id, ventas).then(() =>{
+        this.onResetForm()
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Empleado Actulizado',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        
+      })
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Datos Incorectos',
+        footer: 'ingrese los datos corectos'
+      })
+    }
+
   }
 
   Eliminarventas(id:string){
-    this.ventasservice.eliminarventas(id).then(()=>{
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          )
-        }
-      })
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+        this.ventasservice.eliminarventas(id).then(()=>{
+      
+        })
+      }
     })
+    
   }
 }

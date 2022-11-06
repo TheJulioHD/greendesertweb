@@ -14,7 +14,7 @@ import { ProveedoresComponent } from './components/inventarios/proveedores/prove
 import { ComprasComponent } from './components/inventarios/compras/compras.component';
 import { VentasComponent } from './components/inventarios/ventas/ventas.component';
 import { AlmacenComponent } from './components/inventarios/almacen/almacen.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {  FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EmpleadosComponent } from './pages/empleados/empleados.component';
 import { ClientesComponent } from './pages/clientes/clientes.component';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
@@ -45,8 +45,8 @@ import { AngularFireModule } from '@angular/fire/compat';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule,
     FormsModule,
+    ReactiveFormsModule,
     AngularFirestoreModule,
     AngularFireModule.initializeApp(environment.firebase),
     provideFirebaseApp(() => initializeApp(environment.firebase)),

@@ -1,3 +1,4 @@
+import { empleadoModel } from './../models/empleados/empleados.models';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Observable } from 'rxjs';

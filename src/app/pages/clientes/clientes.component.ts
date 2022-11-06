@@ -16,10 +16,10 @@ export class ClientesComponent implements OnInit {
   constructor(private clienteService: ClientesserviceService,
               private fb: FormBuilder) {
         this.ltsCliente = this.fb.group({
-        Nombre:['', Validators.required],
-        Apellido:['', Validators.required],
-        Direccion:['', Validators.required],
-        Email:['', Validators.required],
+        Nombre:['',     [Validators.required, Validators.minLength(3) ]],
+        Apellido:['',   [Validators.required, Validators.minLength(3) ]],
+        Direccion:['',  [Validators.required, Validators.minLength(20) ]],
+        Email:['',      [Validators.required, Validators.minLength(5) ]],
       })
       this.clienteService.getall().subscribe(data =>{
         this.ltsClientes = [];
@@ -34,7 +34,9 @@ export class ClientesComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  onResetForm(){
+    this.ltsCliente.reset();
+  }
   agregareditarCliente(){
     this.submited= true;
     if(this.ltsCliente.invalid){
@@ -55,27 +57,29 @@ export class ClientesComponent implements OnInit {
       Email: this.ltsCliente.value.Email,
       
     }
-    this.clienteService.agregarCliente(Clientes).then(()=>{
-      if(Clientes==null){
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Datos Incorectos',
-          footer: 'ingrese los datos corectos'
-        })
-      }else{
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Cliente Registrado',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
-      
-    }).catch(error =>{
-      console.log(error)
-    })
+    if(this.ltsCliente.valid){
+      this.clienteService.agregarCliente(Clientes).then(()=>{
+        this.onResetForm();
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Cliente Registrado',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        
+        
+      }).catch(error =>{
+        console.log(error)
+      })
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Datos Incorectos',
+        footer: 'ingrese los datos corectos'
+      })
+    }
   }
 
   esEditar(id:string){
@@ -100,46 +104,50 @@ export class ClientesComponent implements OnInit {
       Direccion: this.ltsCliente.value.Direccion,
       Email: this.ltsCliente.value.Email,
     }
-    this.clienteService.updateCliente(id, Clientes).then(() =>{
-      if(Clientes ==null){
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Datos Incorectos',
-          footer: 'ingrese los datos corectos'
-        })
-      }else{
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Cliente Actulizado',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
-    })
+    if(this.ltsCliente.valid){
+      this.clienteService.updateCliente(id, Clientes).then(() =>{
+        this.onResetForm()
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Cliente Actulizado',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        
+      })
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Datos Incorectos',
+        footer: 'ingrese los datos corectos'
+      })
+    }
   }
 
   EliminarCliente(id:string){
-    this.clienteService.eliminarEmpledo(id).then(()=>{
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          )
-        }
-      })
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+        this.clienteService.eliminarEmpledo(id).then(()=>{
+      
+        })
+      }
     })
+    
   }
 
 }
