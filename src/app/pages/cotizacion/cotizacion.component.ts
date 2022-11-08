@@ -47,8 +47,8 @@ createForm(){
     Apellidos:new FormControl('', [Validators.required, Validators.minLength(3)]),
     Direccion:new FormControl('', [Validators.required, Validators.minLength(20)]),
     Telefono:new FormControl('',  [Validators.required, Validators.minLength(10), Validators.maxLength(10),Validators.pattern(/^[1-9]\d{6,10}$/)]),
-    MontoMax: new FormControl('', [Validators.required,Validators.pattern(/^[1-9]\d{6,10}$/)]),
-    MontoMin:new FormControl ('', [Validators.required,Validators.pattern(/^[1-9]\d{6,10}$/)]),
+    MontoMax: new FormControl('', [Validators.required,Validators.minLength(1), ]),
+    MontoMin:new FormControl ('', [Validators.required,Validators.minLength(1), ]),
     Material:new FormControl ('', [Validators.required])
   })
 }
@@ -117,24 +117,26 @@ get Material() { return this.ltsCotizacion.get('Material'); }
       MontoMin: this.ltsCotizacion.value.MontoMin,
       Material:  this.ltsCotizacion.value.Material
     }
-    this.CotizarService.updateCotizacion(id, Cotizas).then(() =>{
-      if(Cotizas ==null){
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Datos Incorectos',
-          footer: 'Ingrese los datos correctos'
-        })
-      }else{
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: 'Cotiza Actulizada',
-          showConfirmButton: false,
-          timer: 1500
-        })
-      }
-    })
+    if(this.ltsCotizacion.valid){
+      this.CotizarService.updateCotizacion(id, Cotizas).then(() =>{
+        
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: 'Cotiza Actulizada',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        
+      })
+    }else{
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Datos Incorectos',
+        footer: 'Ingrese los datos correctos'
+      })
+    }
   }
 
   esEditar(id:string){
