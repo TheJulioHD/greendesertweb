@@ -29,8 +29,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of ltsproveedores">
-            <th scope="row">1</th>
+          <tr *ngFor="let item of ltsproveedores; let index = index">
+            <th scope="row">{{index + 1}}</th>
             <td>{{item.Codigo}}</td>
             <td>{{item.Nombre}}</td>
             <td>{{item.Direccion}}</td>
