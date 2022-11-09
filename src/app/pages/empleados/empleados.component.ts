@@ -29,7 +29,7 @@ id!: string | null;
                   Apellido:['',  [Validators.required, Validators.minLength(3)]],
                   Direccion:['', [Validators.required, Validators.minLength(20)]],
                   Cargo:['',     [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
-                  Email:['',     [Validators.required, Validators.minLength(5)]],
+                  Email:['',     [Validators.required, Validators.minLength(5), Validators.email]],
                   Pass:['',      [Validators.required, Validators.minLength(8)]],
                 })
                 this.empleadoserivise.getall().subscribe(data =>{

@@ -19,7 +19,7 @@ export class ClientesComponent implements OnInit {
         Nombre:['',     [Validators.required, Validators.minLength(3) ]],
         Apellido:['',   [Validators.required, Validators.minLength(3) ]],
         Direccion:['',  [Validators.required, Validators.minLength(20) ]],
-        Email:['',      [Validators.required, Validators.minLength(5) ]],
+        Email:['',      [Validators.required, Validators.minLength(5), Validators.email ]],
       })
       this.clienteService.getall().subscribe(data =>{
         this.ltsClientes = [];
