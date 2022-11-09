@@ -11,22 +11,22 @@ import { HomeComponent } from './pages/home/home.component';
 import { IndexHomeComponent } from './pages/index-home/index-home.component';
 import { InventariosComponent } from './pages/inventarios/inventarios.component';
 import { LoginComponent } from './pages/login/login.component';
-
+import { canActivate, redirectUnauthorizedTo} from '@angular/fire/auth-guard'
 const routes: Routes = [
   {path:'', redirectTo:'Login', pathMatch:'full'},
-  {path:'cotizacion', component:CotizacionComponent},
-  {path:'home', component:HomeComponent},
+  {path:'cotizacion', component:CotizacionComponent, ...canActivate(()=> redirectUnauthorizedTo(['/Login']))},
+  {path:'home', component:HomeComponent, ...canActivate(()=> redirectUnauthorizedTo(['/Login']))},
   {path:'Login', component:LoginComponent},
-  {path:'Index', component:IndexHomeComponent},
-  {path:'empleados', component:EmpleadosComponent},
-  {path:'cliente', component:ClientesComponent},
+  {path:'Index', component:IndexHomeComponent, ...canActivate(()=> redirectUnauthorizedTo(['/Login']))},
+  {path:'empleados', component:EmpleadosComponent, ...canActivate(()=> redirectUnauthorizedTo(['/Login']))},
+  {path:'cliente', component:ClientesComponent, ...canActivate(()=> redirectUnauthorizedTo(['/Login']))},
   {
-    path:'Invetarios', component:InventariosComponent,
+    path:'Invetarios', component:InventariosComponent,  ...canActivate(()=> redirectUnauthorizedTo(['/Login'])),
     children:[
-      {path:'proveedores', component:ProveedoresComponent},
-      {path:'Compras', component:ComprasComponent},
-      {path:'ventas', component:VentasComponent},
-      {path:'Almacen', component:AlmacenComponent}
+      {path:'proveedores', component:ProveedoresComponent, ...canActivate(()=> redirectUnauthorizedTo(['/Login']))},
+      {path:'Compras', component:ComprasComponent, ...canActivate(()=> redirectUnauthorizedTo(['/Login']))},
+      {path:'ventas', component:VentasComponent, ...canActivate(()=> redirectUnauthorizedTo(['/Login']))},
+      {path:'Almacen', component:AlmacenComponent, ...canActivate(()=> redirectUnauthorizedTo(['/Login']))}
     ]
 
   },

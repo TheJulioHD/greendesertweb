@@ -1,3 +1,4 @@
+import { LoginserviceService } from './../../services/loginservice.service';
 import { empleadoModel } from './../../models/empleados/empleados.models';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -20,7 +21,8 @@ empleado= new empleadoModel()
 submited=false;
 id!: string | null;
   constructor(private empleadoserivise: EmpleadoserviceService,
-              private fb: FormBuilder)
+              private fb: FormBuilder,
+              private register: LoginserviceService)
               {
                 this.ltsempleado = this.fb.group({
                   Nombre:['',    [Validators.required, Validators.minLength(3)]],
@@ -91,6 +93,9 @@ id!: string | null;
     }
     if(this.ltsempleado.valid){
       this.empleadoserivise.agregarEmpleado(empleados).then(()=>{
+        this.register.registerUser(empleados.Email, empleados.Pass).then(()=>{
+          console.log('empleado registrado')
+        }).catch((error) => console.log(error))
           this.onResetForm()
           Swal.fire({
             position: 'top-end',
