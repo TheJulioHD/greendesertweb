@@ -4,14 +4,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { empty } from 'rxjs';
 import { EmpleadoserviceService } from 'src/app/services/empleadoservice.service';
 import Swal from 'sweetalert2';
-
+import {PdfMakeWrapper, Table} from 'pdfmake-wrapper';
+import {ITable} from 'pdfmake-wrapper/lib/interfaces';
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
+PdfMakeWrapper.setFonts(pdfFonts);
 @Component({
   selector: 'app-empleados',
   templateUrl: './empleados.component.html',
   styleUrls: ['./empleados.component.css']
 })
 export class EmpleadosComponent implements OnInit {
-ltsempleado: FormGroup;
+  ltsempleado: FormGroup;
 ltsEmpleados: any[]= []
 empleado= new empleadoModel()
 submited=false;
@@ -37,6 +40,27 @@ id!: string | null;
                   });
                 })
               }
+
+  generatePDF(){
+    const pdf = new PdfMakeWrapper();
+    pdf.add(this.createtable(this.ltsEmpleados))
+
+    pdf.create().open()
+  
+    
+  }
+  createtable(data: any): ITable{
+      [{}]
+      return new Table([
+        ['Nombre','Apellido','Direccion','Cargo','Email'],
+        ...this.extractData(data)
+      ]).layout('lightHorizontalLines')
+      .end
+  }
+
+  extractData(data: any){
+   return data.map((row:any) =>[row.Nombre, row.Apellido,row.Direccion, row.Cargo,row.Email])
+  }
 
   ngOnInit(): void {
   }
