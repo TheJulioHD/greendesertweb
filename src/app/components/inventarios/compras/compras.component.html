@@ -5,7 +5,7 @@
 <div class="container">
   <div class="row">
     <div class="col">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2">
         Agregar
       </button><br>
     </div>
@@ -46,7 +46,7 @@
         <td>{{item.descuento}}</td>
         <td>{{item.iva}}</td>
         <td>
-          <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal2" (click)="esEditar(item.id)">editar</button> &nbsp;&nbsp;
+          <button class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="esEditar(item.id)">editar</button> &nbsp;&nbsp;
           <button class="btn btn-primary" (click)="eliminarCompra(item.id)">borrar</button>
         </td>
       </tr>
@@ -70,49 +70,49 @@
               <div class="col-md-4">
                 <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">Proveedor:</label>
-                  <select class="form-select" aria-label="Default select example" *ngFor="let item of ltsproveedores">
-                    <option selected>seleccione un proveedor</option>
-                    <option formArrayName="Proveedor">{{item.Nombre}}</option>
+                  <select class="form-select" [(ngModel)]="compra.prov" formControlName="Proveedor" aria-label="Default select example" >
+                    <option selected >seleccione un proveedor</option>
+                    <option [value]="item.Nombre" *ngFor="let item of ltsproveedores" >{{item.Nombre}}</option>
                   </select>
                  
                 </div>
                   <div class="mb-3">
                       <label for="exampleInputtext1" class="form-label">material:</label>
-                      <input type="text" formControlName="Material" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                      <input type="text" formControlName="Material" [(ngModel)]="compra.material" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
                      
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputtext1" class="form-label">codigo:</label>
-                      <input type="text" formControlName="coddigo" class="form-control" id="exampleInputtext1">
+                      <input type="text" formControlName="coddigo" [(ngModel)]="compra.codigo" class="form-control" id="exampleInputtext1">
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputtext1" class="form-label">Descripcion:</label>
-                        <input type="text" formControlName="descipcion" class="form-control" id="exampleInputtext1">
+                        <input type="text" formControlName="descipcion" [(ngModel)]="compra.descripcion" class="form-control" id="exampleInputtext1">
                       </div>
               </div>
               <div class="col-md-4">
                   <div class="mb-3">
                       <label for="exampleInputtext1" class="form-label">unidad</label>
-                      <input type="text" formControlName="unidad" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                      <input type="text" formControlName="unidad" [(ngModel)]="compra.unidad" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
                       
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputtext1" class="form-label">cantidad:</label>
-                      <input type="text" formControlName="cantidad" class="form-control" id="exampleInputtext1">
+                      <input type="text" formControlName="cantidad" [(ngModel)]="compra.cantidad" class="form-control" id="exampleInputtext1">
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputtext1" class="form-label">Precio uni:</label>
-                      <input type="text" formControlName="preciouni" class="form-control" id="exampleInputtext1">
+                      <input type="text" formControlName="preciouni" [(ngModel)]="compra.precioUni" class="form-control" id="exampleInputtext1">
                     </div>
                   </div>
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">iva</label>
-                  <input type="text-area" formControlName="iva" class="form-control" id="exampleInputtext1">
+                  <input type="text-area" formControlName="iva" [(ngModel)]="compra.iva" class="form-control" id="exampleInputtext1">
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">descuento</label>
-                  <input type="text-area" formControlName="descuento" class="form-control" id="exampleInputtext1">
+                  <input type="text-area" formControlName="descuento" [(ngModel)]="compra.descuento" class="form-control" id="exampleInputtext1">
                 </div>
                 <button type="submit" class="btn btn-primary">Save changes</button>
               </form>
@@ -140,9 +140,9 @@
               <div class="col-md-4">
                 <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">Proveedor:</label>
-                  <select class="form-select" aria-label="Default select example" *ngFor="let item of ltsproveedores">
+                  <select class="form-select" aria-label="Default select example" >
                     <option selected>seleccione un proveedor</option>
-                    <option formControlName="Proveedor">{{item.Nombre}}</option>
+                    <option formControlName="Proveedor" *ngFor="let item of ltsproveedores">{{item.Nombre}}</option>
                   </select>
                  
                 </div>

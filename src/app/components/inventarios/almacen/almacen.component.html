@@ -60,35 +60,35 @@
           <div class="col-md-4">
               <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">Material:</label>
-                  <input type="text" formControlName="Material" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                  <input type="text" formControlName="Material" [(ngModel)]="almacen.material" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
                  
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">Codigo:</label>
-                  <input type="text" formControlName="coddigo" class="form-control" id="exampleInputtext1">
+                  <input type="text" formControlName="coddigo" [(ngModel)]="almacen.codigo" class="form-control" id="exampleInputtext1">
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputtext1" class="form-label">Proveedor:</label>
-                  <input type="text" formControlName="Proveedor"  class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                  <input type="text" formControlName="Proveedor" [(ngModel)]="almacen.provedor"  class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
                    
                   </div>
           </div>
           <div class="col-md-4">
               <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">Cantidad:</label>
-                  <input type="text" formControlName="cantidad" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                  <input type="text" formControlName="cantidad" [(ngModel)]="almacen.cantida" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
                   
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">Estatus:</label>
-                  <input type="text" formControlName="estatus" class="form-control" id="exampleInputtext1">
+                  <input type="text" formControlName="estatus" [(ngModel)]="almacen.estatus" class="form-control" id="exampleInputtext1">
                 </div>
                 
           </div>
       </div>
       <div class="mb-3">
           <label for="exampleInputtext1" class="form-label">Observaciones</label>
-          <input type="text-area" formControlName="observaciones" class="form-control" id="exampleInputtext1">
+          <input type="text-area" formControlName="observaciones" [(ngModel)]="almacen.observaciones" class="form-control" id="exampleInputtext1">
         </div>
         <button type="submit" class="btn btn-primary">Save changes</button>
       </form>

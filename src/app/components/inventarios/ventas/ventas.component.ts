@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ventasmodel } from 'src/app/models/invenentarios/ventas.model';
 import { VentasserviceService } from 'src/app/services/ventasservice.service';
 import Swal from 'sweetalert2';
 
@@ -11,6 +12,7 @@ import Swal from 'sweetalert2';
 export class VentasComponent implements OnInit {
   ltsventa: FormGroup;
   ltsventas: any[]= []
+  venta= new ventasmodel()
   submited=false;
   id!: string | null;
   constructor(private ventasservice: VentasserviceService,
@@ -68,12 +70,12 @@ export class VentasComponent implements OnInit {
   }
   agregarventas(){
     const ventas: any={
-      Cliente:this.ltsventa.value.Cliente,
-      Direccion:this.ltsventa.value.Direccion,
-      materiales:this.ltsventa.value.materiales,
-      estado:this.ltsventa.value.estado,
-      telefono:this.ltsventa.value.telefono,
-      observaciones:this.ltsventa.value.observaciones,
+      Cliente:this.venta.Cliente,
+      Direccion:this.venta.Direccion,
+      materiales:this.venta.materiales,
+      estado:this.venta.estado,
+      telefono:this.venta.telefono,
+      observaciones:this.venta.observaciones,
     }
     if(this.ltsventa.valid){
       this.ventasservice.agregarventas(ventas).then(()=>{

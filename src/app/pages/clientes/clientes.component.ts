@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ClientesserviceService } from 'src/app/services/clientesservice.service';
 import Swal from 'sweetalert2';
+import {Img, PdfMakeWrapper, Table} from 'pdfmake-wrapper';
+import {ITable} from 'pdfmake-wrapper/lib/interfaces';
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
+import { ClientesModel } from 'src/app/models/Clientes.model';
+PdfMakeWrapper.setFonts(pdfFonts);
 
 @Component({
   selector: 'app-clientes',
@@ -11,6 +16,7 @@ import Swal from 'sweetalert2';
 export class ClientesComponent implements OnInit {
   ltsCliente: FormGroup;
   ltsClientes: any[]= []
+  cliente= new ClientesModel()
   submited=false;
   id!: string | null;
   constructor(private clienteService: ClientesserviceService,
@@ -32,6 +38,28 @@ export class ClientesComponent implements OnInit {
       })
      }
 
+ 
+  generatePDF(){
+    const pdf = new PdfMakeWrapper();
+    
+    pdf.add(this.createtable(this.ltsClientes))
+
+    pdf.create().open()
+  
+    
+  }
+  createtable(data: any): ITable{
+      [{}]
+      return new Table([
+        ['Nombre','Apellido','Direccion','Email','Estatus'],
+        ...this.extractData(data)
+      ]).layout('lightHorizontalLines')
+      .end
+  }
+
+  extractData(data: any){
+   return data.map((row:any) =>[row.Nombre, row.Apellido,row.Direccion, row.Email,row.Estatus])
+  }
   ngOnInit(): void {
   }
   onResetForm(){
@@ -51,10 +79,10 @@ export class ClientesComponent implements OnInit {
   }
   agregarCliente(){
     const Clientes: any={
-      Nombre: this.ltsCliente.value.Nombre,
-      Apellido: this.ltsCliente.value.Apellido,
-      Direccion: this.ltsCliente.value.Direccion,
-      Email: this.ltsCliente.value.Email,
+      Nombre: this.cliente.Nombre,
+      Apellido: this.cliente.Apellido,
+      Direccion: this.cliente.Direccion,
+      Email: this.cliente.Email,
       
     }
     if(this.ltsCliente.valid){

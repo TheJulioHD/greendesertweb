@@ -62,28 +62,28 @@
           <form [formGroup]="ltsempleado" (ngSubmit)="agregarEmpleado()">
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Nombre</label>
-              <input type="text" class="form-control" id="exampleInputEmail1" formControlName="Nombre" aria-describedby="emailHelp">
+              <input type="text" class="form-control"[(ngModel)]="empleado.Nombre" id="exampleInputEmail1" formControlName="Nombre" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Apellido</label>
-              <input type="text" class="form-control" id="exampleInputEmail1" formControlName="Apellido" aria-describedby="emailHelp">
+              <input type="text" class="form-control" [(ngModel)]="empleado.Apellido" id="exampleInputEmail1" formControlName="Apellido" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Direccion</label>
-              <input type="text" class="form-control" id="exampleInputEmail1" formControlName="Direccion" aria-describedby="emailHelp">
+              <input type="text" class="form-control" [(ngModel)]="empleado.Direccion" id="exampleInputEmail1" formControlName="Direccion" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Cargo</label>
-              <input type="text" class="form-control" id="exampleInputEmail1" formControlName="Cargo" aria-describedby="emailHelp">
+              <input type="text" class="form-control" [(ngModel)]="empleado.Cargo" id="exampleInputEmail1" formControlName="Cargo" aria-describedby="emailHelp">
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Email address</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" formControlName="Email" aria-describedby="emailHelp">
+              <input type="email" class="form-control" [(ngModel)]="empleado.Email" id="exampleInputEmail1" formControlName="Email" aria-describedby="emailHelp">
               <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Contraseña</label>
-              <input type="password" class="form-control" id="exampleInputEmail1" formControlName="Pass" aria-describedby="emailHelp">
+              <input type="password" class="form-control" [(ngModel)]="empleado.Pass" id="exampleInputEmail1" formControlName="Pass" aria-describedby="emailHelp">
               <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
             </div>
             <button type="submit" class="btn btn-primary">Save changes</button>

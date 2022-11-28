@@ -1,3 +1,4 @@
+import { proveedoresModel } from './../../../models/invenentarios/proveedores/proveedores.model';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProveedorserviceService } from 'src/app/services/proveedorservice.service';
@@ -11,6 +12,7 @@ import Swal from 'sweetalert2';
 export class ProveedoresComponent implements OnInit {
   ltsproveedor: FormGroup;
   ltsproveedores: any[]= []
+  proveedores= new proveedoresModel()
   submited=false;
   id!: string | null;
   constructor(private proveedoresservice: ProveedorserviceService,
@@ -68,12 +70,12 @@ export class ProveedoresComponent implements OnInit {
   }
   agregarProveedor(){
     const proveedor: any={
-      Codigo:this.ltsproveedor.value.Codigo,
-      Nombre:this.ltsproveedor.value.Nombre,
-      Direccion:this.ltsproveedor.value.Direccion,
-      Email:this.ltsproveedor.value.Email,
-      telefono:this.ltsproveedor.value.telefono,
-      status:this.ltsproveedor.value.status,
+      Codigo:this.proveedores.Codigo,
+      Nombre:this.proveedores.Nombre,
+      Direccion:this.proveedores.Direccion,
+      Email:this.proveedores.Email,
+      telefono:this.proveedores.telefono,
+      status:this.proveedores.status,
     }
     if(this.ltsproveedor.valid){
       this.proveedoresservice.agregarproveedor(proveedor).then(()=>{
