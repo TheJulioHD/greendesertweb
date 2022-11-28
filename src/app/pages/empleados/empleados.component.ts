@@ -5,9 +5,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { empty } from 'rxjs';
 import { EmpleadoserviceService } from 'src/app/services/empleadoservice.service';
 import Swal from 'sweetalert2';
-import {PdfMakeWrapper, Table} from 'pdfmake-wrapper';
+import {Img, PdfMakeWrapper, Table} from 'pdfmake-wrapper';
 import {ITable} from 'pdfmake-wrapper/lib/interfaces';
 import * as pdfFonts from "pdfmake/build/vfs_fonts";
+import { stringLength } from '@firebase/util';
 PdfMakeWrapper.setFonts(pdfFonts);
 @Component({
   selector: 'app-empleados',
@@ -45,6 +46,7 @@ id!: string | null;
 
   generatePDF(){
     const pdf = new PdfMakeWrapper();
+    
     pdf.add(this.createtable(this.ltsEmpleados))
 
     pdf.create().open()
@@ -84,31 +86,37 @@ id!: string | null;
   }
   agregarEmpleado(){
     const empleados: any={
-      Nombre: this.ltsempleado.value.Nombre,
-      Apellido: this.ltsempleado.value.Apellido,
-      Direccion: this.ltsempleado.value.Direccion,
-      Cargo: this.ltsempleado.value.Cargo,
-      Email: this.ltsempleado.value.Email,
-      Pass: this.ltsempleado.value.Pass,
+      Nombre: this.empleado.Nombre,
+      Apellido: this.empleado.Apellido,
+      Direccion: this.empleado.Direccion,
+      Cargo: this.empleado.Cargo,
+      Email: this.empleado.Email,
+      Pass: this.empleado.Pass,
+      uid: String,
     }
     if(this.ltsempleado.valid){
-      this.empleadoserivise.agregarEmpleado(empleados).then(()=>{
-        this.register.registerUser(empleados.Email, empleados.Pass).then(()=>{
-          console.log('empleado registrado')
-        }).catch((error) => console.log(error))
-          this.onResetForm()
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Empleado Registrado',
-            showConfirmButton: false,
-            timer: 1500
-          })
-        
-        
-      }).catch(error =>{
-        console.log(error)
-      })
+      this.register.registerUser(empleados.Email, empleados.Pass).then((res)=>{
+        if(res){
+          empleados.uid = res.user.uid
+          this.empleadoserivise.agregarEmpleado(empleados).then(()=>{
+       
+            this.onResetForm()
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Empleado Registrado',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          
+          
+        }).catch(error =>{
+          console.log(error)
+        })
+        }
+        console.log('empleado registrado')
+      }).catch((error) => console.log(error))
+      
     }else[
       Swal.fire({
         icon: 'error',
@@ -122,15 +130,15 @@ id!: string | null;
 
   esEditar(id:string){
     this.id=id;
-    this.empleadoserivise.getEmpleado(id).subscribe(data =>{
-      console.log(data.payload.data()['Nombre']);
+    this.empleadoserivise.getEmpleado<empleadoModel>(id).subscribe(data =>{
+      console.log(data.Nombre);
       this.ltsempleado.setValue({
-        Nombre: data.payload.data()['Nombre'],
-      Apellido: data.payload.data()['Apellido'],
-      Direccion: data.payload.data()['Direccion'],
-      Cargo: data.payload.data()['Cargo'],
-      Email: data.payload.data()['Email'],
-      Pass: data.payload.data()['Pass'],
+        Nombre: data.Nombre,
+      Apellido: data.Apellido,
+      Direccion: data.Direccion,
+      Cargo: data.Cargo,
+      Email: data.Email,
+      Pass: data.Pass,
     
       })
     })
@@ -144,6 +152,7 @@ id!: string | null;
       Cargo: this.ltsempleado.value.Cargo,
       Email: this.ltsempleado.value.Email,
       Pass: this.ltsempleado.value.Pass,
+      uid: id
     }
     if(this.ltsempleado.valid){
       this.empleadoserivise.updateEmpleado(id, empleados).then(() =>{

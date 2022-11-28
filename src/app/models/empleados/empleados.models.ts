@@ -5,4 +5,5 @@ export class empleadoModel{
       Cargo!: string;
       Email!: string;
       Pass!: string;
+      uid!: string;
 }

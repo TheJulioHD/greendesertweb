@@ -64,34 +64,34 @@
         <div class="col-md-4">
             <div class="mb-3">
                 <label for="exampleInputtext1" class="form-label">Cliente:</label>
-                <input type="text" formControlName="Cliente"  class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                <input type="text" formControlName="Cliente" [(ngModel)]="venta.Cliente" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
                
               </div>
               <div class="mb-3">
                 <label for="exampleInputtext1" class="form-label">Materiales:</label>
-                <input type="text" formControlName="materiales"  class="form-control" id="exampleInputtext1">
+                <input type="text" formControlName="materiales" [(ngModel)]="venta.materiales"  class="form-control" id="exampleInputtext1">
               </div>
               <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">Estado:</label>
-                  <input type="text" formControlName="estado"  class="form-control" id="exampleInputtext1">
+                  <input type="text" formControlName="estado" [(ngModel)]="venta.estado"  class="form-control" id="exampleInputtext1">
                 </div>
         </div>
         <div class="col-md-4">
             <div class="mb-3">
                 <label for="exampleInputtext1" class="form-label">Direccion:</label>
-                <input type="text" formControlName="Direccion"  class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                <input type="text" formControlName="Direccion" [(ngModel)]="venta.Direccion" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
                 
               </div>
               <div class="mb-3">
                 <label for="exampleInputtext1" class="form-label">Telefono:</label>
-                <input type="text" formControlName="telefono"  class="form-control" id="exampleInputtext1">
+                <input type="text" formControlName="telefono" [(ngModel)]="venta.telefono" class="form-control" id="exampleInputtext1">
               </div>
               
         </div>
     </div>
     <div class="mb-3">
         <label for="exampleInputtext1" class="form-label">Observaciones</label>
-        <input type="text-area" formControlName="observaciones"  class="form-control" id="exampleInputtext1">
+        <input type="text-area" formControlName="observaciones" [(ngModel)]="venta.observaciones" class="form-control" id="exampleInputtext1">
       </div>
     
       <button type="submit" class="btn btn-primary">Save changes</button>

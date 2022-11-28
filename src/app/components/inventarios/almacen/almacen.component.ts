@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { almacenmodel } from 'src/app/models/invenentarios/almacen.model';
 import { AlmacenserviceService } from 'src/app/services/almacenservice.service';
 import { ProveedorserviceService } from 'src/app/services/proveedorservice.service';
 import Swal from 'sweetalert2';
@@ -13,6 +14,7 @@ export class AlmacenComponent implements OnInit {
   ltsalmacen: FormGroup;
   ltsalmacenes: any[]= []
   ltsproveedores: any[]= []
+  almacen= new almacenmodel()
   submited=false;
   id!: string | null;
   constructor(private almacenSerice: AlmacenserviceService,
@@ -80,12 +82,12 @@ export class AlmacenComponent implements OnInit {
   }
   agregaralmacen(){
     const almacen: any={
-      Proveedor:this.ltsalmacen.value.Proveedor,
-      Material:this.ltsalmacen.value.Material,
-      coddigo:this.ltsalmacen.value.coddigo,
-      cantidad:this.ltsalmacen.value.cantidad,
-      estatus:this.ltsalmacen.value.estatus,
-      observaciones:this.ltsalmacen.value.observaciones,
+      Proveedor:this.almacen.provedor,
+      Material:this.almacen.material,
+      coddigo:this.almacen.codigo,
+      cantidad:this.almacen.cantida,
+      estatus:this.almacen.estatus,
+      observaciones:this.almacen.observaciones,
     }
     if(this.ltsalmacen.valid){
       this.almacenSerice.agregaralmacen(almacen).then(()=>{

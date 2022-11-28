@@ -4,43 +4,43 @@
     <form [formGroup]="ltsCotizacion" (ngSubmit)="agregarCotiza()">
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Email address</label>
-          <input type="email" formControlName="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <input type="email" formControlName="email" [(ngModel)]="Cotizacion.Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
           <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
           
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Nombres</label>
-          <input type="text" formControlName="Nombres" class="form-control" id="exampleInputPassword1">
+          <input type="text" formControlName="Nombres" [(ngModel)]="Cotizacion.nombre" class="form-control" id="exampleInputPassword1">
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Apellidos</label>
-          <input type="text" formControlName="Apellidos" class="form-control" id="exampleInputPassword1">
+          <input type="text" formControlName="Apellidos" [(ngModel)]="Cotizacion.apellidos" class="form-control" id="exampleInputPassword1">
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Direcccion</label>
-          <input type="text" formControlName="Direccion" class="form-control" id="exampleInputPassword1">
+          <input type="text" formControlName="Direccion" [(ngModel)]="Cotizacion.direccion" class="form-control" id="exampleInputPassword1">
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Telefono</label>
-          <input type="text" formControlName="Telefono" class="form-control" id="exampleInputPassword1">
+          <input type="text" formControlName="Telefono" [(ngModel)]="Cotizacion.telefono" class="form-control" id="exampleInputPassword1">
         </div>
         <div class="row">
           <div class="col-md-2">
             <div class="mb-3">
               <label for="exampleInputPassword1" class="form-label">Monto Minimo</label>
-              <input type="text" formControlName="MontoMin" class="form-control" id="exampleInputPassword1">
+              <input type="text" formControlName="MontoMin" [(ngModel)]="Cotizacion.montomin" class="form-control" id="exampleInputPassword1">
             </div>
           </div>
           <div class="col-md-2">
             <div class="mb-3">
               <label for="exampleInputPassword1" class="form-label">Monto Maximo</label>
-              <input type="text"  formControlName="MontoMax" class="form-control" id="exampleInputPassword1">
+              <input type="text"  formControlName="MontoMax" [(ngModel)]="Cotizacion.montomax" class="form-control" id="exampleInputPassword1">
             </div>
           </div>
           <div class="col-md-4">
             <div class="mb-3">
               <div class="form-floating">
-                  <select class="form-select" id="floatingSelect" aria-label="Floating label select example" formControlName="Material">
+                  <select class="form-select" id="floatingSelect" aria-label="Floating label select example" [(ngModel)]="Cotizacion.uidalmacen" formControlName="Material">
                     <option [value]="item.material" *ngFor="let item of ltsalmacen">{{item.Material}}</option>
                   </select>
                   <label for="floatingSelect">Works with selects</label>
@@ -51,8 +51,11 @@
           </div>
           
         </div>
-        
-        <button type="submit" class="btn btn-primary">Cotizar</button>
+        <ng-template ngIf="show">
+          <button type="submit" class="btn btn-primary">Cotizar</button>
+
+        </ng-template>
+        <button type="submit" class="btn btn-primary" *ngIf="!show">Cotizar</button>
       </form>
       <br>
       <table class="table" >

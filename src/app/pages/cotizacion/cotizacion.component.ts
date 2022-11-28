@@ -1,8 +1,10 @@
+import { cotizacionModel } from './../../models/cotizacion.model';
 import { AlmacenserviceService } from 'src/app/services/almacenservice.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CotizacionserviceService } from 'src/app/services/cotizacionservice.service';
 import Swal from 'sweetalert2';
+import { convertToParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-cotizacion',
@@ -11,8 +13,9 @@ import Swal from 'sweetalert2';
 })
 export class CotizacionComponent implements OnInit {
   ltsCotizacion: FormGroup;
-  ltsCotizaciones: any[]= []
-  ltsalmacen: any[]= []
+  ltsCotizaciones: any[]= [];
+  ltsalmacen: any[]= [];
+  Cotizacion = new cotizacionModel()
   submited=false;
   id!: string | null;
   constructor(private CotizarService : CotizacionserviceService,
@@ -72,14 +75,14 @@ get Material() { return this.ltsCotizacion.get('Material'); }
   agregarCotiza(){
     
     const Cotizas: any={
-      email: this.ltsCotizacion.value.email,
-      Nombres: this.ltsCotizacion.value.Nombres,
-      Apellidos: this.ltsCotizacion.value.Apellidos,
-      Direccion: this.ltsCotizacion.value.Direccion,
-      Telefono: this.ltsCotizacion.value.Telefono,
-      MontoMax: this.ltsCotizacion.value.MontoMax,
-      MontoMin: this.ltsCotizacion.value.MontoMin,
-      Material: this.ltsCotizacion.value.Material
+      email: this.Cotizacion.Email,
+      Nombres: this.Cotizacion.nombre,
+      Apellidos: this.Cotizacion.apellidos,
+      Direccion: this.Cotizacion.direccion,
+      Telefono: this.Cotizacion.telefono,
+      MontoMax: this.Cotizacion.montomax,
+      MontoMin: this.Cotizacion.montomin,
+      Material: JSON.stringify(this.Cotizacion.uidalmacen)
       
     }
     if(this.ltsCotizacion.valid){

@@ -1,11 +1,10 @@
-export interface proveedoresModel{
+export class proveedoresModel{
     
-    prov: string;
-    bodega: string;
-    Estado: string;
-    solicitante: string;
-    autoriza: string;
-    direccion:string;
-    observacion: string;
+    Codigo!:string;
+    Nombre!:string;
+    Direccion!:string;
+    Email!:string;
+    telefono!:string;
+    status!:string
 
 }

@@ -18,10 +18,10 @@ export class EmpleadoserviceService {
    }
 
    agregarEmpleado(empleado: any):Promise<any>{
-    return this.db.collection('empleados').add(empleado);
+    return this.db.collection('empleados').doc(empleado.uid).set(empleado)
    }
-   getEmpleado(id:string):Observable<any>{
-    return this.db.collection('empleados').doc(id).snapshotChanges()
+   getEmpleado<empleadoModel>(id:string):Observable<any>{
+    return this.db.collection('empleados').doc<empleadoModel>(id).valueChanges()
    }
    updateEmpleado(id:string, data:any):Promise<any>{
     return this.db.collection('empleados').doc(id).update(data)

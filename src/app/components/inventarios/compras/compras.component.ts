@@ -4,6 +4,7 @@ import { ProveedorserviceService } from 'src/app/services/proveedorservice.servi
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ComprasserviceService } from 'src/app/services/comprasservice.service';
 import Swal from 'sweetalert2';
+import { comprasModel } from 'src/app/models/invenentarios/compras.model';
 
 @Component({
   selector: 'app-compras',
@@ -14,6 +15,7 @@ export class ComprasComponent implements OnInit {
   ltscompras!:Array<any>
   ltsproveedores: any[]= []
   compras!: FormGroup
+  compra= new comprasModel()
   submited=false;
   id!: string | null;
   constructor(private proveedoresservice: ProveedorserviceService,
@@ -90,15 +92,15 @@ export class ComprasComponent implements OnInit {
   agregarCompra(){
     const compra: any={
 
-      Proveedor:this.compras.value.Proveedor,
-      Material:this.compras.value.Material,
-      coddigo:this.compras.value.coddigo,
-      cantidad:this.compras.value.cantidad,
-      preciouni:this.compras.value.preciouni,
-      descipcion:this.compras.value.descipcion,
-      unidad:this.compras.value.unidad,
-      descuento:this.compras.value.descuento,
-      iva:this.compras.value.iva,
+      Proveedor:this.compra.prov,
+      Material:this.compra.material,
+      coddigo:this.compra.codigo,
+      cantidad:this.compra.cantidad,
+      preciouni:this.compra.precioUni,
+      descipcion:this.compra.descripcion,
+      unidad:this.compra.unidad,
+      descuento:this.compra.descuento,
+      iva:this.compra.iva,
     }
     if(this.compras.valid){
       this.comprasService.agregarcompras(compra).then(()=>{
