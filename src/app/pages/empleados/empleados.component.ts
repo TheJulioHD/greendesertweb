@@ -29,7 +29,7 @@ id!: string | null;
                   Nombre:['',    [Validators.required, Validators.minLength(3)]],
                   Apellido:['',  [Validators.required, Validators.minLength(3)]],
                   Direccion:['', [Validators.required, Validators.minLength(20)]],
-                  Cargo:['',     [Validators.required, Validators.minLength(5), Validators.maxLength(20)]],
+                  Cargo:['',     [Validators.required]],
                   Email:['',     [Validators.required, Validators.minLength(5), Validators.email]],
                   Pass:['',      [Validators.required, Validators.minLength(8)]],
                 })
@@ -77,7 +77,7 @@ id!: string | null;
       console.log('no se pudo actulizar')
     }else{
       this.editarEmpleado(this.id)
-    }
+    } 
     
   }
 
@@ -174,6 +174,7 @@ id!: string | null;
         footer: 'ingrese los datos corectos'
       })
     }
+    
     
   }
 

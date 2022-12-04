@@ -61,27 +61,54 @@
               <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">Material:</label>
                   <input type="text" formControlName="Material" [(ngModel)]="almacen.material" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
-                 
+                  <div *ngIf="ltsalmacen.get('Material')?.touched && ltsalmacen.get('Material')?.errors?.['required']"
+                  class="alert alert-danger">Campo requerido</div>
+                  <div *ngIf="ltsalmacen.get('Material')?.touched && ltsalmacen.get('Material')?.errors?.['minlength']" 
+                  class="alert alert-danger">El minimo de caracteres es de 3</div>
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">Codigo:</label>
                   <input type="text" formControlName="coddigo" [(ngModel)]="almacen.codigo" class="form-control" id="exampleInputtext1">
+                  <div *ngIf="ltsalmacen.get('coddigo')?.touched && ltsalmacen.get('coddigo')?.errors?.['required']"
+                  class="alert alert-danger">Campo requerido</div>
+                  <div *ngIf="ltsalmacen.get('coddigo')?.touched && ltsalmacen.get('coddigo')?.errors?.['minlength']" 
+                  class="alert alert-danger">El minimo de caracteres es de 4</div>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputtext1" class="form-label">Proveedor:</label>
-                  <input type="text" formControlName="Proveedor" [(ngModel)]="almacen.provedor"  class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
-                   
+                  <!-- <input type="text" formControlName="Proveedor" [(ngModel)]="almacen.provedor"  class="form-control" id="exampleInputtext1" aria-describedby="textHelp"> -->
+                  <select class="form-select" id="floatingSelect" aria-label="Floating label select example" 
+                  [(ngModel)]="almacen.provedor" formControlName="Proveedor">
+         <option value="null" >selecciona una</option>
+         <option value="item.Nombre" *ngFor="let item of ltsproveedores" >{{item.Nombre}}</option>
+        
+         
+         </select>
+                  <div *ngIf="ltsalmacen.get('Proveedor')?.touched && ltsalmacen.get('Proveedor')?.errors?.['required']"
+                  class="alert alert-danger">Campo requerido</div>
                   </div>
           </div>
           <div class="col-md-4">
               <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">Cantidad:</label>
                   <input type="text" formControlName="cantidad" [(ngModel)]="almacen.cantida" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
-                  
+                  <div *ngIf="ltsalmacen.get('cantidad')?.touched && ltsalmacen.get('cantidad')?.errors?.['required']"
+                class="alert alert-danger">Campo requerido</div>
+                <div *ngIf="ltsalmacen.get('cantidad')?.touched && ltsalmacen.get('cantidad')?.errors?.['minlength']" 
+                class="alert alert-danger">El minimo de caracteres es de 1</div>
                 </div>
                 <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">Estatus:</label>
-                  <input type="text" formControlName="estatus" [(ngModel)]="almacen.estatus" class="form-control" id="exampleInputtext1">
+                  <!-- <input type="text" formControlName="estatus" [(ngModel)]="almacen.estatus" class="form-control" id="exampleInputtext1"> -->
+                  <select class="form-select" id="floatingSelect" aria-label="Floating label select example" 
+                  [(ngModel)]="almacen.estatus" formControlName="estatus">
+         <option value="null" >selecciona una</option>
+         <option value="Activo" >Activo</option>
+         <option value="Desactivado" >Desactivado</option>
+         
+         </select>
+         <div *ngIf="ltsalmacen.get('estatus')?.touched && ltsalmacen.get('estatus')?.errors?.['required']"
+                 class="alert alert-danger">Campo requerido</div>
                 </div>
                 
           </div>
@@ -89,6 +116,10 @@
       <div class="mb-3">
           <label for="exampleInputtext1" class="form-label">Observaciones</label>
           <input type="text-area" formControlName="observaciones" [(ngModel)]="almacen.observaciones" class="form-control" id="exampleInputtext1">
+          <div *ngIf="ltsalmacen.get('observaciones')?.touched && ltsalmacen.get('observaciones')?.errors?.['required']"
+          class="alert alert-danger">Campo requerido</div>
+          <div *ngIf="ltsalmacen.get('observaciones')?.touched && ltsalmacen.get('observaciones')?.errors?.['minlength']" 
+          class="alert alert-danger">El minimo de caracteres es de 10</div>
         </div>
         <button type="submit" class="btn btn-primary">Save changes</button>
       </form>
@@ -117,27 +148,54 @@
                 <div class="mb-3">
                     <label for="exampleInputtext1" class="form-label">Material:</label>
                     <input type="text" formControlName="Material" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
-                   
+                    <div *ngIf="ltsalmacen.get('Material')?.touched && ltsalmacen.get('Material')?.errors?.['required']"
+                    class="alert alert-danger">Campo requerido</div>
+                    <div *ngIf="ltsalmacen.get('Material')?.touched && ltsalmacen.get('Material')?.errors?.['minlength']" 
+                    class="alert alert-danger">El minimo de caracteres es de 3</div>
                   </div>
                   <div class="mb-3">
                     <label for="exampleInputtext1" class="form-label">Codigo:</label>
                     <input type="text" formControlName="coddigo" class="form-control" id="exampleInputtext1">
+                    <div *ngIf="ltsalmacen.get('coddigo')?.touched && ltsalmacen.get('coddigo')?.errors?.['required']"
+                    class="alert alert-danger">Campo requerido</div>
+                    <div *ngIf="ltsalmacen.get('coddigo')?.touched && ltsalmacen.get('coddigo')?.errors?.['minlength']" 
+                    class="alert alert-danger">El minimo de caracteres es de 4</div>
                   </div>
                   <div class="mb-3">
                       <label for="exampleInputtext1" class="form-label">Proveedor:</label>
-                    <input type="text" formControlName="Proveedor"  class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
-                     
+                    <!-- <input type="text" formControlName="Proveedor"  class="form-control" id="exampleInputtext1" aria-describedby="textHelp"> -->
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" 
+                    formControlName="Proveedor">
+           <option value="null" >selecciona una</option>
+         <option value="item.Nombre" *ngFor="let item of ltsproveedores" >{{item.Nombre}}</option>
+        
+         
+         </select>
+                    <div *ngIf="ltsalmacen.get('Proveedor')?.touched && ltsalmacen.get('Proveedor')?.errors?.['required']"
+                    class="alert alert-danger">Campo requerido</div>
                     </div>
             </div>
             <div class="col-md-4">
                 <div class="mb-3">
                     <label for="exampleInputtext1" class="form-label">Cantidad:</label>
                     <input type="text" formControlName="cantidad" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
-                    
+                    <div *ngIf="ltsalmacen.get('cantidad')?.touched && ltsalmacen.get('cantidad')?.errors?.['required']"
+                class="alert alert-danger">Campo requerido</div>
+                <div *ngIf="ltsalmacen.get('cantidad')?.touched && ltsalmacen.get('cantidad')?.errors?.['minlength']" 
+                class="alert alert-danger">El minimo de caracteres es de 1</div>
                   </div>
                   <div class="mb-3">
                     <label for="exampleInputtext1" class="form-label">Estatus:</label>
-                    <input type="text" formControlName="estatus" class="form-control" id="exampleInputtext1">
+                    <!-- <input type="text" formControlName="estatus" class="form-control" id="exampleInputtext1"> -->
+                    <select class="form-select" id="floatingSelect" aria-label="Floating label select example" 
+                    formControlName="estatus">
+           <option value="null" >selecciona una</option>
+           <option value="Activo" >Activo</option>
+           <option value="Desactivado" >Desactivado</option>
+           
+           </select>
+           <div *ngIf="ltsalmacen.get('estatus')?.touched && ltsalmacen.get('estatus')?.errors?.['required']"
+                   class="alert alert-danger">Campo requerido</div>
                   </div>
                   
             </div>
@@ -145,6 +203,10 @@
         <div class="mb-3">
             <label for="exampleInputtext1" class="form-label">Observaciones</label>
             <input type="text-area" formControlName="observaciones" class="form-control" id="exampleInputtext1">
+            <div *ngIf="ltsalmacen.get('observaciones')?.touched && ltsalmacen.get('observaciones')?.errors?.['required']"
+                    class="alert alert-danger">Campo requerido</div>
+                    <div *ngIf="ltsalmacen.get('observaciones')?.touched && ltsalmacen.get('observaciones')?.errors?.['minlength']" 
+                    class="alert alert-danger">El minimo de caracteres es de 10</div>
           </div>
           <button type="submit" class="btn btn-primary">Save changes</button>
         </form>

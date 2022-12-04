@@ -63,30 +63,63 @@
                 <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">Codigo:</label>
                   <input type="text" formControlName="Codigo" [(ngModel)]="proveedores.Codigo" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
-                  
+                  <div *ngIf="ltsproveedor.get('Codigo')?.touched && ltsproveedor.get('Codigo')?.errors?.['required']"
+                  class="alert alert-danger">Campo requerido</div>
+                  <div *ngIf="ltsproveedor.get('Codigo')?.touched && ltsproveedor.get('Codigo')?.errors?.['minlength']" 
+                  class="alert alert-danger">El minimo de caracteres es de 3</div>
                 </div>
                 <div class="mb-3">
                       <label for="exampleInputtext1" class="form-label">Nombre:</label>
                       <input type="text" class="form-control" [(ngModel)]="proveedores.Nombre" formControlName="Nombre" id="exampleInputtext1">
+                      <div *ngIf="ltsproveedor.get('Nombre')?.touched && ltsproveedor.get('Nombre')?.errors?.['required']"
+                      class="alert alert-danger">Campo requerido</div>
+                      <div *ngIf="ltsproveedor.get('Nombre')?.touched && ltsproveedor.get('Nombre')?.errors?.['minlength']" 
+                      class="alert alert-danger">El minimo de caracteres es de 3</div>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputtext1" class="form-label">Direccion:</label>
                         <input type="text" class="form-control" [(ngModel)]="proveedores.Direccion" formControlName="Direccion" id="exampleInputtext1">
+                        <div *ngIf="ltsproveedor.get('Direccion')?.touched && ltsproveedor.get('Direccion')?.errors?.['required']"
+                        class="alert alert-danger">Campo requerido</div>
+                        <div *ngIf="ltsproveedor.get('Direccion')?.touched && ltsproveedor.get('Direccion')?.errors?.['minlength']" 
+                        class="alert alert-danger">El minimo de caracteres es de 20</div>
                       </div>
               </div>
               <div class="col-md-4">
                   <div class="mb-3">
                       <label for="exampleInputtext1" class="form-label">Email</label>
                       <input type="email" class="form-control" [(ngModel)]="proveedores.Email" formControlName="Email" id="exampleInputtext1" aria-describedby="textHelp">
-                      
+                      <div *ngIf="ltsproveedor.get('Email')?.touched && ltsproveedor.get('Email')?.errors?.['required']"
+                class="alert alert-danger">Campo requerido</div>
+                <div *ngIf="ltsproveedor.get('Email')?.touched && ltsproveedor.get('Email')?.errors?.['minlength']" 
+                class="alert alert-danger">El minimo de caracteres es de 5</div>
+                <div *ngIf="ltsproveedor.get('Email')?.touched && ltsproveedor.get('Email')?.errors?.['email']" 
+                class="alert alert-danger">Tine que ser un Email valido</div>
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputtext1" class="form-label">Telefono:</label>
                       <input type="text" class="form-control" [(ngModel)]="proveedores.telefono" formControlName="telefono" id="exampleInputtext1">
+                      <div *ngIf="ltsproveedor.get('telefono')?.touched && ltsproveedor.get('telefono')?.errors?.['required']"
+                      class="alert alert-danger">Campo requerido</div>
+                      <div *ngIf="ltsproveedor.get('telefono')?.touched && ltsproveedor.get('telefono')?.errors?.['minlength']" 
+                      class="alert alert-danger">El minimo de caracteres es de 10</div>
+                      <div *ngIf="ltsproveedor.get('telefono')?.touched && ltsproveedor.get('telefono')?.errors?.['maxlength']" 
+                      class="alert alert-danger">El maximo de caracteres es de 10</div>
+                      <div *ngIf="ltsproveedor.get('telefono')?.touched && ltsproveedor.get('telefono')?.errors?.['pattern']" 
+                      class="alert alert-danger">Tienen que ser numeros</div>
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputtext1" class="form-label">Estatus:</label>
-                      <input type="text" class="form-control" [(ngModel)]="proveedores.status" formControlName="status" id="exampleInputtext1">
+                      <!-- <input type="text" class="form-control" [(ngModel)]="proveedores.status" formControlName="status" id="exampleInputtext1"> -->
+                      <select class="form-select" id="floatingSelect" aria-label="Floating label select example" 
+                      [(ngModel)]="proveedores.status" formControlName="status">
+             <option value="null" >selecciona una</option>
+             <option value="Activo" >Activo</option>
+             <option value="Desactivado" >Desactivado</option>
+             
+             </select>
+             <div *ngIf="ltsproveedor.get('status')?.touched && ltsproveedor.get('status')?.errors?.['required']"
+                     class="alert alert-danger">Campo requerido</div>
                     </div>
                   </div>
                 </div>
@@ -117,30 +150,63 @@
                 <div class="mb-3">
                   <label for="exampleInputtext1" class="form-label">Codigo:</label>
                   <input type="text" formControlName="Codigo" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
-                  
+                  <div *ngIf="ltsproveedor.get('Codigo')?.touched && ltsproveedor.get('Codigo')?.errors?.['required']"
+                        class="alert alert-danger">Campo requerido</div>
+                        <div *ngIf="ltsproveedor.get('Codigo')?.touched && ltsproveedor.get('Codigo')?.errors?.['minlength']" 
+                        class="alert alert-danger">El minimo de caracteres es de 3</div>
                 </div>
                 <div class="mb-3">
                       <label for="exampleInputtext1" class="form-label">Nombre:</label>
                       <input type="text" class="form-control" formControlName="Nombre" id="exampleInputtext1">
+                      <div *ngIf="ltsproveedor.get('Nombre')?.touched && ltsproveedor.get('Nombre')?.errors?.['required']"
+                      class="alert alert-danger">Campo requerido</div>
+                      <div *ngIf="ltsproveedor.get('Nombre')?.touched && ltsproveedor.get('Nombre')?.errors?.['minlength']" 
+                      class="alert alert-danger">El minimo de caracteres es de 3</div>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputtext1" class="form-label">Direccion:</label>
                         <input type="text" class="form-control" formControlName="Direccion" id="exampleInputtext1">
+                        <div *ngIf="ltsproveedor.get('Direccion')?.touched && ltsproveedor.get('Direccion')?.errors?.['required']"
+                        class="alert alert-danger">Campo requerido</div>
+                        <div *ngIf="ltsproveedor.get('Direccion')?.touched && ltsproveedor.get('Direccion')?.errors?.['minlength']" 
+                        class="alert alert-danger">El minimo de caracteres es de 20</div>
                       </div>
               </div>
               <div class="col-md-4">
                   <div class="mb-3">
                       <label for="exampleInputtext1" class="form-label">Email</label>
                       <input type="email" class="form-control" formControlName="Email" id="exampleInputtext1" aria-describedby="textHelp">
-                      
+                      <div *ngIf="ltsproveedor.get('Email')?.touched && ltsproveedor.get('Email')?.errors?.['required']"
+                class="alert alert-danger">Campo requerido</div>
+                <div *ngIf="ltsproveedor.get('Email')?.touched && ltsproveedor.get('Email')?.errors?.['minlength']" 
+                class="alert alert-danger">El minimo de caracteres es de 5</div>
+                <div *ngIf="ltsproveedor.get('Email')?.touched && ltsproveedor.get('Email')?.errors?.['email']" 
+                class="alert alert-danger">Tine que ser un Email valido</div>
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputtext1" class="form-label">Telefono:</label>
                       <input type="text" class="form-control" formControlName="telefono" id="exampleInputtext1">
+                      <div *ngIf="ltsproveedor.get('telefono')?.touched && ltsproveedor.get('telefono')?.errors?.['required']"
+                      class="alert alert-danger">Campo requerido</div>
+                      <div *ngIf="ltsproveedor.get('telefono')?.touched && ltsproveedor.get('telefono')?.errors?.['minlength']" 
+                      class="alert alert-danger">El minimo de caracteres es de 10</div>
+                      <div *ngIf="ltsproveedor.get('telefono')?.touched && ltsproveedor.get('telefono')?.errors?.['maxlength']" 
+                      class="alert alert-danger">El maximo de caracteres es de 10</div>
+                      <div *ngIf="ltsproveedor.get('telefono')?.touched && ltsproveedor.get('telefono')?.errors?.['pattern']" 
+                      class="alert alert-danger">Tienen que ser numeros</div>
                     </div>
                     <div class="mb-3">
                       <label for="exampleInputtext1" class="form-label">Estatus:</label>
-                      <input type="text" class="form-control" formControlName="status" id="exampleInputtext1">
+                      <select class="form-select" id="floatingSelect" aria-label="Floating label select example" 
+                       formControlName="status">
+              <option value="null" >selecciona una</option>
+              <option value="Activo" >Activo</option>
+              <option value="Desactivado" >Desactivado</option>
+              
+              </select>
+              <div *ngIf="ltsproveedor.get('status')?.touched && ltsproveedor.get('status')?.errors?.['required']"
+                      class="alert alert-danger">Campo requerido</div>
+                      <!-- <input type="text" class="form-control" formControlName="status" id="exampleInputtext1"> -->
                     </div>
                   </div>
                 </div>

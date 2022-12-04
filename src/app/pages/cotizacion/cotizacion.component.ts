@@ -5,6 +5,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { CotizacionserviceService } from 'src/app/services/cotizacionservice.service';
 import Swal from 'sweetalert2';
 import { convertToParamMap } from '@angular/router';
+import { LoginserviceService } from 'src/app/services/loginservice.service';
+import { EmpleadoserviceService } from 'src/app/services/empleadoservice.service';
+import { empleadoModel } from 'src/app/models/empleados/empleados.models';
 
 @Component({
   selector: 'app-cotizacion',
@@ -18,9 +21,13 @@ export class CotizacionComponent implements OnInit {
   Cotizacion = new cotizacionModel()
   submited=false;
   id!: string | null;
+  rol!: 'operador'| 'contador' | 'admin';
   constructor(private CotizarService : CotizacionserviceService,
               private fb: FormBuilder,
-              private almacen: AlmacenserviceService) { 
+              private almacen: AlmacenserviceService,
+              private auth: LoginserviceService,
+              private empleados: EmpleadoserviceService,
+              ) { 
         this.ltsCotizacion = this.createForm();
     this.CotizarService.getall().subscribe(data =>{
       this.ltsCotizaciones = [];
@@ -40,18 +47,26 @@ export class CotizacionComponent implements OnInit {
         })
       });
     })
+    this.auth.state().subscribe((res)=>{
+      if(res){
+        console.log('logiado')
+        this.getdatosEmpleados(res.uid)
+      }else{
+        console.log('sin login')
+      }
+    })
   }
 
 createForm(){
   return new FormGroup({
 
-    email: new FormControl('',   [Validators.required, Validators.minLength(5)]),
+    email: new FormControl('',   [Validators.required, Validators.minLength(5), Validators.email]),
     Nombres:new FormControl('', [Validators.required, Validators.minLength(3)]),
     Apellidos:new FormControl('', [Validators.required, Validators.minLength(3)]),
     Direccion:new FormControl('', [Validators.required, Validators.minLength(20)]),
     Telefono:new FormControl('',  [Validators.required, Validators.minLength(10), Validators.maxLength(10),Validators.pattern(/^[1-9]\d{6,10}$/)]),
-    MontoMax: new FormControl('', [Validators.required,Validators.minLength(1), ]),
-    MontoMin:new FormControl ('', [Validators.required,Validators.minLength(1), ]),
+    MontoMax: new FormControl('', [Validators.required,Validators.minLength(2), ]),
+    MontoMin:new FormControl ('', [Validators.required,Validators.minLength(2), ]),
     Material:new FormControl ('', [Validators.required])
   })
 }
@@ -200,4 +215,13 @@ get Material() { return this.ltsCotizacion.get('Material'); }
     this.show = true;
   }
   */
+
+  getdatosEmpleados(uid:string){
+    this.empleados.getEmpleado<empleadoModel>(uid).subscribe(res=>{
+      if(res){
+        this.rol =res.Cargo
+        console.log(res.Cargo) 
+      }
+    })
+  }
 }

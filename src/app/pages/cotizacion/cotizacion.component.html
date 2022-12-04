@@ -1,40 +1,73 @@
 <app-navbar></app-navbar>
 <div class="container content" role="main">
     <h1>Cotizaciones</h1>
-    <form [formGroup]="ltsCotizacion" (ngSubmit)="agregarCotiza()">
+    <div *ngIf="rol ==='admin'">
+      <form [formGroup]="ltsCotizacion" (ngSubmit)="agregarCotiza()">
         <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">Email address</label>
+          <label for="exampleInputEmail1" class="form-label">Dirección de correo electronico</label>
           <input type="email" formControlName="email" [(ngModel)]="Cotizacion.Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-          <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-          
+          <div *ngIf="ltsCotizacion.get('email')?.touched && ltsCotizacion.get('email')?.errors?.['required']"
+          class="alert alert-danger">Campo requerido</div>
+          <div *ngIf="ltsCotizacion.get('email')?.touched && ltsCotizacion.get('email')?.errors?.['minlength']" 
+          class="alert alert-danger">El minimo de caracteres es de 5</div>
+          <div *ngIf="ltsCotizacion.get('email')?.touched && ltsCotizacion.get('email')?.errors?.['email']" 
+          class="alert alert-danger">Tine que ser un Email valido</div>
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Nombres</label>
           <input type="text" formControlName="Nombres" [(ngModel)]="Cotizacion.nombre" class="form-control" id="exampleInputPassword1">
+          <div *ngIf="ltsCotizacion.get('Nombres')?.touched && ltsCotizacion.get('Nombres')?.errors?.['required']"
+          class="alert alert-danger">Campo requerido</div>
+          <div *ngIf="ltsCotizacion.get('Nombres')?.touched && ltsCotizacion.get('Nombres')?.errors?.['minlength']" 
+          class="alert alert-danger">El minimo de caracteres es de 3</div>
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Apellidos</label>
           <input type="text" formControlName="Apellidos" [(ngModel)]="Cotizacion.apellidos" class="form-control" id="exampleInputPassword1">
+          <div *ngIf="ltsCotizacion.get('Apellidos')?.touched && ltsCotizacion.get('Apellidos')?.errors?.['required']"
+          class="alert alert-danger">Campo requerido</div>
+          <div *ngIf="ltsCotizacion.get('Apellidos')?.touched && ltsCotizacion.get('Apellidos')?.errors?.['minlength']" 
+          class="alert alert-danger">El minimo de caracteres es de 3</div>
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Direcccion</label>
           <input type="text" formControlName="Direccion" [(ngModel)]="Cotizacion.direccion" class="form-control" id="exampleInputPassword1">
+          <div *ngIf="ltsCotizacion.get('Direccion')?.touched && ltsCotizacion.get('Direccion')?.errors?.['required']"
+          class="alert alert-danger">Campo requerido</div>
+          <div *ngIf="ltsCotizacion.get('Direccion')?.touched && ltsCotizacion.get('Direccion')?.errors?.['minlength']" 
+          class="alert alert-danger">El minimo de caracteres es de 20</div>
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Telefono</label>
           <input type="text" formControlName="Telefono" [(ngModel)]="Cotizacion.telefono" class="form-control" id="exampleInputPassword1">
+          <div *ngIf="ltsCotizacion.get('Telefono')?.touched && ltsCotizacion.get('Telefono')?.errors?.['required']"
+          class="alert alert-danger">Campo requerido</div>
+          <div *ngIf="ltsCotizacion.get('Telefono')?.touched && ltsCotizacion.get('Telefono')?.errors?.['minlength']" 
+          class="alert alert-danger">El minimo de caracteres es de 10</div>
+          <div *ngIf="ltsCotizacion.get('Telefono')?.touched && ltsCotizacion.get('Telefono')?.errors?.['maxlength']" 
+          class="alert alert-danger">El maximo de caracteres es de 10</div>
+          <div *ngIf="ltsCotizacion.get('Telefono')?.touched && ltsCotizacion.get('Telefono')?.errors?.['pattern']" 
+          class="alert alert-danger">Tienen que ser numeros</div>
         </div>
         <div class="row">
           <div class="col-md-2">
             <div class="mb-3">
               <label for="exampleInputPassword1" class="form-label">Monto Minimo</label>
               <input type="text" formControlName="MontoMin" [(ngModel)]="Cotizacion.montomin" class="form-control" id="exampleInputPassword1">
+              <div *ngIf="ltsCotizacion.get('MontoMin')?.touched && ltsCotizacion.get('MontoMin')?.errors?.['required']"
+              class="alert alert-danger">Campo requerido</div>
+              <div *ngIf="ltsCotizacion.get('MontoMin')?.touched && ltsCotizacion.get('MontoMin')?.errors?.['minlength']" 
+              class="alert alert-danger">El minimo de caracteres es de 2</div>
             </div>
           </div>
           <div class="col-md-2">
             <div class="mb-3">
               <label for="exampleInputPassword1" class="form-label">Monto Maximo</label>
               <input type="text"  formControlName="MontoMax" [(ngModel)]="Cotizacion.montomax" class="form-control" id="exampleInputPassword1">
+              <div *ngIf="ltsCotizacion.get('MontoMax')?.touched && ltsCotizacion.get('MontoMax')?.errors?.['required']"
+              class="alert alert-danger">Campo requerido</div>
+              <div *ngIf="ltsCotizacion.get('MontoMax')?.touched && ltsCotizacion.get('MontoMax')?.errors?.['minlength']" 
+              class="alert alert-danger">El minimo de caracteres es de 2</div>
             </div>
           </div>
           <div class="col-md-4">
@@ -43,7 +76,9 @@
                   <select class="form-select" id="floatingSelect" aria-label="Floating label select example" [(ngModel)]="Cotizacion.uidalmacen" formControlName="Material">
                     <option [value]="item.material" *ngFor="let item of ltsalmacen">{{item.Material}}</option>
                   </select>
-                  <label for="floatingSelect">Works with selects</label>
+                  <div *ngIf="ltsCotizacion.get('Nombres')?.touched && ltsCotizacion.get('Material')?.errors?.['required']"
+          class="alert alert-danger">Campo requerido</div>
+          
                 </div>
           </div>
           
@@ -57,6 +92,7 @@
         </ng-template>
         <button type="submit" class="btn btn-primary" *ngIf="!show">Cotizar</button>
       </form>
+    </div>
       <br>
       <table class="table" >
         <thead class="table-dark">
@@ -77,8 +113,10 @@
             <td>{{item.Direccion}}</td>
             <td>{{item.Material}}</td>
             <td>
-              <button type="button" class="btn btn-primary" (click)="EliminarCotiza(item.id)">Eliminar</button>
-
+              <button type="button" class="btn btn-primary" (click)="EliminarCotiza(item.id)" *ngIf="rol==='admin'">Eliminar</button>
+              <ng-template  >
+                <button type="button" class="btn btn-primary" (click)="EliminarCotiza(item.id)" disabled *ngIf="rol==='operador'">Eliminar</button>
+              </ng-template>
             </td>
           </tr>
           

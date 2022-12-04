@@ -14,14 +14,14 @@ export class AlmacenComponent implements OnInit {
   ltsalmacen: FormGroup;
   ltsalmacenes: any[]= []
   ltsproveedores: any[]= []
-  almacen= new almacenmodel()
+  almacen= new almacenmodel()//proti
   submited=false;
   id!: string | null;
   constructor(private almacenSerice: AlmacenserviceService,
                private fb: FormBuilder,
                private provedoresservice: ProveedorserviceService) { 
                 this.ltsalmacen = this.fb.group({
-                  Proveedor:['',      [Validators.required, Validators.minLength(3)]],
+                  Proveedor:['',      [Validators.required]],
                   Material:['',       [Validators.required, Validators.minLength(3)]],
                   coddigo:['',        [Validators.required, Validators.minLength(4)]],
                   cantidad:['',       [Validators.required, Validators.minLength(1)]],

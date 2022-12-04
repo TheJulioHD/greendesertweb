@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
               private loginService: LoginserviceService,
               private fb: FormBuilder,) {
                 this.ltslogin =this.fb.group({
-                  Email:['',     [Validators.required, Validators.minLength(5)]],
+                  Email:['',     [Validators.required, Validators.minLength(5), Validators.email]],
                   Pass:['',      [Validators.required, Validators.minLength(8)]],
                 })
                }

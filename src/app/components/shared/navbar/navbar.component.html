@@ -9,16 +9,16 @@
           <li class="nav-item">
             <a class="nav-link " aria-current="page" [routerLink]="['/home']" routerLinkActive="router-link-active" >Home</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="rol === 'operador' || rol ==='admin'">
             <a class="nav-link " routerLink="/cotizacion">Cotizaciones</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link " [routerLink]="['/Invetarios']" routerLinkActive="router-link-active" >Inventarios</a>
+          <li class="nav-item" *ngIf="rol === 'contador' || rol ==='admin'" >
+            <a class="nav-link "  [routerLink]="['/Invetarios']" routerLinkActive="router-link-active" >Inventarios</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="rol ==='admin'">
             <a class="nav-link " [routerLink]="['/empleados']" routerLinkActive="router-link-active" >Gestion de Empleados</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item" *ngIf="rol ==='admin'">
             <a class="nav-link " [routerLink]="['/cliente']" routerLinkActive="router-link-active" >Gestion de Clientes</a>
           </li>
           

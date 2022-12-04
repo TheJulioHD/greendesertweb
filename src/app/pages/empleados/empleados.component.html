@@ -63,28 +63,58 @@
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Nombre</label>
               <input type="text" class="form-control"[(ngModel)]="empleado.Nombre" id="exampleInputEmail1" formControlName="Nombre" aria-describedby="emailHelp">
+              <div *ngIf="ltsempleado.get('Nombre')?.touched && ltsempleado.get('Nombre')?.errors?.['required']"
+              class="alert alert-danger">Campo requerido</div>
+              <div *ngIf="ltsempleado.get('Nombre')?.touched && ltsempleado.get('v')?.errors?.['minlength']" 
+              class="alert alert-danger">El minimo de caracteres es de 3</div>
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Apellido</label>
               <input type="text" class="form-control" [(ngModel)]="empleado.Apellido" id="exampleInputEmail1" formControlName="Apellido" aria-describedby="emailHelp">
+              <div *ngIf="ltsempleado.get('Apellido')?.touched && ltsempleado.get('Apellido')?.errors?.['required']"
+              class="alert alert-danger">Campo requerido</div>
+              <div *ngIf="ltsempleado.get('Apellido')?.touched && ltsempleado.get('Apellido')?.errors?.['minlength']" 
+              class="alert alert-danger">El minimo de caracteres es de 3</div>
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Direccion</label>
               <input type="text" class="form-control" [(ngModel)]="empleado.Direccion" id="exampleInputEmail1" formControlName="Direccion" aria-describedby="emailHelp">
+              <div *ngIf="ltsempleado.get('Direccion')?.touched && ltsempleado.get('Direccion')?.errors?.['required']"
+              class="alert alert-danger">Campo requerido</div>
+              <div *ngIf="ltsempleado.get('Direccion')?.touched && ltsempleado.get('Direccion')?.errors?.['minlength']" 
+              class="alert alert-danger">El minimo de caracteres es de 20</div>
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Cargo</label>
-              <input type="text" class="form-control" [(ngModel)]="empleado.Cargo" id="exampleInputEmail1" formControlName="Cargo" aria-describedby="emailHelp">
+
+              <select class="form-select" id="floatingSelect" aria-label="Floating label select example" 
+              [(ngModel)]="empleado.Cargo" formControlName="Cargo">
+              <option value="null" >selecciona una</option>
+              <option value="admin" >admin</option>
+              <option value="contador" >contador</option>
+              <option value="operador" >operador</option>
+              </select>
+              <!-- <input type="text" class="form-control" [(ngModel)]="empleado.Cargo" id="exampleInputEmail1" formControlName="Cargo" aria-describedby="emailHelp"> -->
+              <div *ngIf="ltsempleado.get('Cargo')?.touched && ltsempleado.get('Cargo')?.errors?.['required']"
+              class="alert alert-danger">Campo requerido</div>
             </div>
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Email address</label>
+              <label for="exampleInputEmail1" class="form-label">Direccion de correo electronico</label>
               <input type="email" class="form-control" [(ngModel)]="empleado.Email" id="exampleInputEmail1" formControlName="Email" aria-describedby="emailHelp">
-              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+              <div *ngIf="ltsempleado.get('Email')?.touched && ltsempleado.get('Email')?.errors?.['required']"
+              class="alert alert-danger">Campo requerido</div>
+              <div *ngIf="ltsempleado.get('Email')?.touched && ltsempleado.get('Email')?.errors?.['minlength']" 
+              class="alert alert-danger">El minimo de caracteres es de 5</div>
+              <div *ngIf="ltsempleado.get('Email')?.touched && ltsempleado.get('Email')?.errors?.['email']" 
+              class="alert alert-danger">Tine que ser un Email valido</div>
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Contraseña</label>
               <input type="password" class="form-control" [(ngModel)]="empleado.Pass" id="exampleInputEmail1" formControlName="Pass" aria-describedby="emailHelp">
-              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+              <div *ngIf="ltsempleado.get('Pass')?.touched && ltsempleado.get('Pass')?.errors?.['required']"
+              class="alert alert-danger">Campo requerido</div>
+              <div *ngIf="ltsempleado.get('Pass')?.touched && ltsempleado.get('Pass')?.errors?.['minlength']" 
+              class="alert alert-danger">El minimo de caracteres es de 8</div>
             </div>
             <button type="submit" class="btn btn-primary">Save changes</button>
           </form>
@@ -108,28 +138,57 @@
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Nombre</label>
               <input type="text" class="form-control" id="exampleInputEmail1" formControlName="Nombre" aria-describedby="emailHelp">
+              <div *ngIf="ltsempleado.get('Nombre')?.touched && ltsempleado.get('Nombre')?.errors?.['required']"
+              class="alert alert-danger">Campo requerido</div>
+              <div *ngIf="ltsempleado.get('Nombre')?.touched && ltsempleado.get('v')?.errors?.['minlength']" 
+              class="alert alert-danger">El minimo de caracteres es de 3</div>
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Apellido</label>
               <input type="text" class="form-control" id="exampleInputEmail1" formControlName="Apellido" aria-describedby="emailHelp">
+              <div *ngIf="ltsempleado.get('Apellido')?.touched && ltsempleado.get('Apellido')?.errors?.['required']"
+              class="alert alert-danger">Campo requerido</div>
+              <div *ngIf="ltsempleado.get('Apellido')?.touched && ltsempleado.get('Apellido')?.errors?.['minlength']" 
+              class="alert alert-danger">El minimo de caracteres es de 3</div>
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Direccion</label>
               <input type="text" class="form-control" id="exampleInputEmail1" formControlName="Direccion" aria-describedby="emailHelp">
+              <div *ngIf="ltsempleado.get('Direccion')?.touched && ltsempleado.get('Direccion')?.errors?.['required']"
+              class="alert alert-danger">Campo requerido</div>
+              <div *ngIf="ltsempleado.get('Direccion')?.touched && ltsempleado.get('Direccion')?.errors?.['minlength']" 
+              class="alert alert-danger">El minimo de caracteres es de 20</div>
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Cargo</label>
-              <input type="text" class="form-control" id="exampleInputEmail1" formControlName="Cargo" aria-describedby="emailHelp">
+              <select class="form-select" id="floatingSelect" aria-label="Floating label select example" 
+              [(ngModel)]="empleado.Cargo" formControlName="Cargo">
+              <option value="null" >selecciona una</option>
+              <option value="admin" >admin</option>
+              <option value="contador" >contador</option>
+              <option value="operador" >operador</option>
+              </select>
+              <div *ngIf="ltsempleado.get('Cargo')?.touched && ltsempleado.get('Cargo')?.errors?.['required']"
+          class="alert alert-danger">Campo requerido</div>
+              <!-- <input type="text" class="form-control" id="exampleInputEmail1" formControlName="Cargo"  aria-describedby="emailHelp" [disabled]="true"> -->
             </div>
             <div class="mb-3">
-              <label for="exampleInputEmail1" class="form-label">Email address</label>
+              <label for="exampleInputEmail1" class="form-label">Direccion de Correo electronico</label>
               <input type="email" class="form-control" id="exampleInputEmail1" formControlName="Email" aria-describedby="emailHelp">
-              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+              <div *ngIf="ltsempleado.get('Email')?.touched && ltsempleado.get('Email')?.errors?.['required']"
+              class="alert alert-danger">Campo requerido</div>
+              <div *ngIf="ltsempleado.get('Email')?.touched && ltsempleado.get('Email')?.errors?.['minlength']" 
+              class="alert alert-danger">El minimo de caracteres es de 5</div>
+              <div *ngIf="ltsempleado.get('Email')?.touched && ltsempleado.get('Email')?.errors?.['email']" 
+              class="alert alert-danger">Tine que ser un Email valido</div>
             </div>
             <div class="mb-3">
               <label for="exampleInputEmail1" class="form-label">Contraseña</label>
               <input type="password" class="form-control" id="exampleInputEmail1" formControlName="Pass" aria-describedby="emailHelp">
-              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+              <div *ngIf="ltsempleado.get('Pass')?.touched && ltsempleado.get('Pass')?.errors?.['required']"
+              class="alert alert-danger">Campo requerido</div>
+              <div *ngIf="ltsempleado.get('Pass')?.touched && ltsempleado.get('Pass')?.errors?.['minlength']" 
+              class="alert alert-danger">El minimo de caracteres es de 8</div>
             </div>
             <button type="submit" class="btn btn-primary">Save changes</button>
           </form>
