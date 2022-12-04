@@ -18,11 +18,11 @@ export class ProveedoresComponent implements OnInit {
   constructor(private proveedoresservice: ProveedorserviceService,
               private fb: FormBuilder) {
                 this.ltsproveedor = this.fb.group({
-                  Codigo:['', Validators.required],
-                  Nombre:['', Validators.required],
-                  Direccion:['', Validators.required],
-                  Email:['', Validators.required],
-                  telefono:['', Validators.required],
+                  Codigo:['', [Validators.required,Validators.minLength(5)]],
+                  Nombre:['', [Validators.required, Validators.minLength(3)]],
+                  Direccion:['', [Validators.required, Validators.minLength(20)]],
+                  Email:['', [Validators.required,Validators.minLength(5),Validators.email]],
+                  telefono:['', [Validators.required, Validators.minLength(10), Validators.maxLength(10),Validators.pattern(/^[1-9]\d{6,10}$/)]],
                   status:['', Validators.required],
                 })
                 this.proveedoresservice.getall().subscribe( data =>{

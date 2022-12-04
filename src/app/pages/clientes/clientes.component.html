@@ -58,19 +58,36 @@
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Nombre</label>
                 <input type="text" class="form-control" [(ngModel)]="cliente.Nombre" id="exampleInputEmail1" formControlName="Nombre" aria-describedby="emailHelp">
+                <div *ngIf="ltsCliente.get('Nombre')?.touched && ltsCliente.get('Nombre')?.errors?.['required']"
+                class="alert alert-danger">Campo requerido</div>
+                <div *ngIf="ltsCliente.get('Nombre')?.touched && ltsCliente.get('Nombre')?.errors?.['minlength']" 
+                class="alert alert-danger">El minimo de caracteres es de 3</div>
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Apellido</label>
                 <input type="text" class="form-control" [(ngModel)]="cliente.Apellido" id="exampleInputEmail1" formControlName="Apellido" aria-describedby="emailHelp">
+                <div *ngIf="ltsCliente.get('Apellido')?.touched && ltsCliente.get('Apellido')?.errors?.['required']"
+                class="alert alert-danger">Campo requerido</div>
+                <div *ngIf="ltsCliente.get('Apellido')?.touched && ltsCliente.get('Apellido')?.errors?.['minlength']" 
+                class="alert alert-danger">El minimo de caracteres es de 3</div>
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Direccion</label>
                 <input type="text" class="form-control" [(ngModel)]="cliente.Direccion" id="exampleInputEmail1" formControlName="Direccion" aria-describedby="emailHelp">
+                <div *ngIf="ltsCliente.get('Direccion')?.touched && ltsCliente.get('Direccion')?.errors?.['required']"
+                class="alert alert-danger">Campo requerido</div>
+                <div *ngIf="ltsCliente.get('Direccion')?.touched && ltsCliente.get('Direccion')?.errors?.['minlength']" 
+                class="alert alert-danger">El minimo de caracteres es de 20</div>
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
                 <input type="email" class="form-control" [(ngModel)]="cliente.Email" id="exampleInputEmail1" formControlName="Email" aria-describedby="emailHelp">
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <div *ngIf="ltsCliente.get('Email')?.touched && ltsCliente.get('Email')?.errors?.['required']"
+                class="alert alert-danger">Campo requerido</div>
+                <div *ngIf="ltsCliente.get('Email')?.touched && ltsCliente.get('Email')?.errors?.['minlength']" 
+                class="alert alert-danger">El minimo de caracteres es de 5</div>
+                <div *ngIf="ltsCliente.get('Email')?.touched && ltsCliente.get('Email')?.errors?.['email']" 
+                class="alert alert-danger">Tine que ser un Email valido</div>
               </div>
               
               <button type="submit" class="btn btn-primary">Save changes</button>
@@ -97,19 +114,36 @@
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Nombre</label>
                 <input type="text" class="form-control" id="exampleInputEmail1" formControlName="Nombre" aria-describedby="emailHelp">
+                <div *ngIf="ltsCliente.get('Nombre')?.touched && ltsCliente.get('Nombre')?.errors?.['required']"
+                class="alert alert-danger">Campo requerido</div>
+                <div *ngIf="ltsCliente.get('Nombre')?.touched && ltsCliente.get('Nombre')?.errors?.['minlength']" 
+                class="alert alert-danger">El minimo de caracteres es de 3</div>
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Apellido</label>
                 <input type="text" class="form-control" id="exampleInputEmail1" formControlName="Apellido" aria-describedby="emailHelp">
+                <div *ngIf="ltsCliente.get('Apellido')?.touched && ltsCliente.get('Apellido')?.errors?.['required']"
+                class="alert alert-danger">Campo requerido</div>
+                <div *ngIf="ltsCliente.get('Apellido')?.touched && ltsCliente.get('Apellido')?.errors?.['minlength']" 
+                class="alert alert-danger">El minimo de caracteres es de 3</div>
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Direccion</label>
                 <input type="text" class="form-control" id="exampleInputEmail1" formControlName="Direccion" aria-describedby="emailHelp">
+                <div *ngIf="ltsCliente.get('Direccion')?.touched && ltsCliente.get('Direccion')?.errors?.['required']"
+                class="alert alert-danger">Campo requerido</div>
+                <div *ngIf="ltsCliente.get('Direccion')?.touched && ltsCliente.get('Direccion')?.errors?.['minlength']" 
+                class="alert alert-danger">El minimo de caracteres es de 20</div>
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Email address</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" formControlName="Email" aria-describedby="emailHelp">
-                <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                <div *ngIf="ltsCliente.get('Email')?.touched && ltsCliente.get('Email')?.errors?.['required']"
+                class="alert alert-danger">Campo requerido</div>
+                <div *ngIf="ltsCliente.get('Email')?.touched && ltsCliente.get('Email')?.errors?.['minlength']" 
+                class="alert alert-danger">El minimo de caracteres es de 5</div>
+                <div *ngIf="ltsCliente.get('Email')?.touched && ltsCliente.get('Email')?.errors?.['email']" 
+                class="alert alert-danger">Tine que ser un Email valido</div>
               </div>
               
               <button type="submit" class="btn btn-primary">Save changes</button>
