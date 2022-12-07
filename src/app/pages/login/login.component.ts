@@ -2,6 +2,7 @@ import { LoginserviceService } from './../../services/loginservice.service';
 import { Component, OnInit,  } from '@angular/core';
 import {  Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -33,7 +34,12 @@ export class LoginComponent implements OnInit {
       
       this.router.navigate(['home']);
     }).catch((error) => {
-
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Usuario no existente',
+        footer: 'ingrese los datos corectos'
+      })
     })
   }
 

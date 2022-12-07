@@ -19,15 +19,27 @@ export class CotizacionComponent implements OnInit {
   ltsCotizaciones: any[]= [];
   ltsalmacen: any[]= [];
   Cotizacion = new cotizacionModel()
+  canti!: number
+  total !:number
+  Proveedor!:string
+  Materials !:string
+  coddigo!:string
+  estatus!:string
+  observaciones!:string
+  cantanterio!:number
+  uidAmacen!:string
   submited=false;
+  aprove: boolean = false
   id!: string | null;
-  rol!: 'operador'| 'contador' | 'admin';
+  rol!: 'operador'| 'contador' |'secretaria'| 'admin';
   constructor(private CotizarService : CotizacionserviceService,
               private fb: FormBuilder,
               private almacen: AlmacenserviceService,
               private auth: LoginserviceService,
               private empleados: EmpleadoserviceService,
               ) { 
+   this.aprove=true
+
         this.ltsCotizacion = this.createForm();
     this.CotizarService.getall().subscribe(data =>{
       this.ltsCotizaciones = [];
@@ -45,6 +57,7 @@ export class CotizacionComponent implements OnInit {
           id: element.payload.doc.id,
           ...element.payload.doc.data()
         })
+        console.log(this.ltsalmacen)
       });
     })
     this.auth.state().subscribe((res)=>{
@@ -67,7 +80,8 @@ createForm(){
     Telefono:new FormControl('',  [Validators.required, Validators.minLength(10), Validators.maxLength(10),Validators.pattern(/^[1-9]\d{6,10}$/)]),
     MontoMax: new FormControl('', [Validators.required,Validators.minLength(2), ]),
     MontoMin:new FormControl ('', [Validators.required,Validators.minLength(2), ]),
-    Material:new FormControl ('', [Validators.required])
+    Material:new FormControl ('', [Validators.required]),
+    Cantidad:new FormControl ('', [Validators.required, Validators.minLength(1)])
   })
 }
 
@@ -82,12 +96,13 @@ get Telefono() { return this.ltsCotizacion.get('Telefono'); }
 get MontoMax() { return this.ltsCotizacion.get('MontoMax'); }
 get MontoMin() { return this.ltsCotizacion.get('MontoMin'); }
 get Material() { return this.ltsCotizacion.get('Material'); }
+get Cantidad() { return this.ltsCotizacion.get('Cantidad'); }
   show = false
 
   ngOnInit(): void {
   }
 
-  agregarCotiza(){
+   agregarCotiza(){
     
     const Cotizas: any={
       email: this.Cotizacion.Email,
@@ -97,22 +112,42 @@ get Material() { return this.ltsCotizacion.get('Material'); }
       Telefono: this.Cotizacion.telefono,
       MontoMax: this.Cotizacion.montomax,
       MontoMin: this.Cotizacion.montomin,
-      Material: JSON.stringify(this.Cotizacion.uidalmacen)
+      Material: '',
+      Cantidad: this.Cotizacion.Cantidad
       
     }
+   this.aprove=false
+
     if(this.ltsCotizacion.valid){
-      this.CotizarService.agregarCotizacion(Cotizas).then(()=>{
-          this.onResetForm();
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Cotiza registrada',
-            showConfirmButton: false,
-            timer: 1500
-          })
-      }).catch(error =>{
-        console.log(error)
+      debugger
+      this.uidAmacen= this.Cotizacion.uidalmacen
+      this.almacen.getalmacen(this.Cotizacion.uidalmacen).subscribe( data => {
+        console.log(data.payload.data()['Material'])
+         this.canti=data.payload.data()['cantidad']
+         this.total= Cotizas.Cantidad-this.canti
+         this.Materials=data.payload.data()['Material']
+         this.Proveedor=data.payload.data()['Proveedor']
+         this.coddigo=data.payload.data()['coddigo']
+         this.estatus=data.payload.data()['estatus']
+         this.observaciones=data.payload.data()['observaciones']
+    
+        
+         
       })
+      Cotizas.Material=this.Materials
+      this.CotizarService.agregarCotizacion(Cotizas).then(()=>{
+        this.onResetForm();
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: 'Cotiza registrada',
+          showConfirmButton: false,
+          timer: 1500
+        })
+    }).catch(error =>{
+      console.log(error)
+    })
+      
     }else[
       Swal.fire({
         icon: 'error',
@@ -123,6 +158,33 @@ get Material() { return this.ltsCotizacion.get('Material'); }
     ]
     
   }
+aprobarcotiza(){
+  if(this.total<0){
+    this.total=this.total*(-1)
+   }else{
+    this.total=this.total
+   }
+   console.log(this.total)
+
+  const almacendes: any = {
+    Proveedor:this.Proveedor,
+    Material:this.Materials,
+    coddigo:this.coddigo,
+    cantidad:this.total,
+    estatus:this.estatus,
+    observaciones:this.observaciones
+   }
+   this.aprove=true
+  this.almacen.updatealmacen(this.uidAmacen, almacendes).then((res) => console.log(res)).catch((error) =>console.log(error))
+  Swal.fire({
+    position: 'top-end',
+    icon: 'success',
+    title: 'Cotiza aprobada',
+    showConfirmButton: false,
+    timer: 1500
+  })
+}
+
 
   editarCotiza(id:string){
     const Cotizas: any={
@@ -203,9 +265,35 @@ get Material() { return this.ltsCotizacion.get('Material'); }
           'La cotiza ha sido eliminada con éxito',
           'success'
         )
-        this.CotizarService.eliminarCotizacion(id).then(()=>{
-      
+        this.CotizarService.getCotizacion(id).subscribe((data) =>{
+          console.log(data.payload.data()['Nombres'])
+           this.cantanterio = data.payload.data()['Cantidad']
+          
+          
         })
+        this.almacen.getalmacen(this.uidAmacen).subscribe((data)=>{
+          this.total = data.payload.data()['cantidad']
+         this.Materials=data.payload.data()['Material']
+         this.Proveedor=data.payload.data()['Proveedor']
+         this.coddigo=data.payload.data()['coddigo']
+         this.estatus=data.payload.data()['estatus']
+         this.observaciones=data.payload.data()['observaciones']
+
+          
+        })
+        this.total= this.total+this.cantanterio
+          const almacendes: any = {
+            Proveedor:this.Proveedor,
+        Material:this.Materials,
+        coddigo:this.coddigo,
+        cantidad:this.total,
+        estatus:this.estatus,
+        observaciones:this.observaciones
+           }
+           this.CotizarService.eliminarCotizacion(id).then(()=>{
+             
+          })
+          this.almacen.updatealmacen(this.uidAmacen, almacendes).then((res)=>console.log(res)).catch((error)=>console.log(error))
       }
     })
     

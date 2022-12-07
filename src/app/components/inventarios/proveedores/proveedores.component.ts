@@ -78,20 +78,48 @@ export class ProveedoresComponent implements OnInit {
       status:this.proveedores.status,
     }
     if(this.ltsproveedor.valid){
-      this.proveedoresservice.agregarproveedor(proveedor).then(()=>{
-        this.onResetForm()
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Empleado Registrado',
-            showConfirmButton: false,
-            timer: 1500
-          }).catch(error =>{
-            console.log(error)
-          })
+      
+      // this.proveedoresservice.agregarproveedor(proveedor).then(()=>{
+      //   this.onResetForm()
+      //     Swal.fire({
+      //       position: 'top-end',
+      //       icon: 'success',
+      //       title: 'Empleado Registrado',
+      //       showConfirmButton: false,
+      //       timer: 1500
+      //     }).catch(error =>{
+      //       console.log(error)
+      //     })
         
         
-      })
+      // })
+      console.log( this.ltsproveedores)
+      if( this.ltsproveedores.find((user) =>user.Codigo === proveedor.Codigo) 
+      || this.ltsproveedores.find((user) =>user.Email === proveedor.Email)
+      || this.ltsproveedores.find((user) =>user.telefono === proveedor.telefono) ){
+        console.log('error')
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Datos Incorectos',
+          footer: 'ingrese los datos corectos'
+        })
+      }else{
+        this.proveedoresservice.agregarproveedor(proveedor).then(()=>{
+            this.onResetForm()
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Empleado Registrado',
+                showConfirmButton: false,
+                timer: 1500
+              }).catch(error =>{
+                console.log(error)
+              })
+            
+            
+           })
+      }
     }else{
       Swal.fire({
         icon: 'error',
@@ -135,18 +163,18 @@ export class ProveedoresComponent implements OnInit {
 
   EliminarProveedor(id:string){
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: '¿Estas seguro?',
+      text: "Una vez selecionado ya no se puede revertir esta accion!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'si deseo elimarlo!'
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
+          'Eliminado!',
+          'Tu archivo a sido eliminado.',
           'success'
         )
         this.proveedoresservice.eliminarEmpledo(id).then(()=>{

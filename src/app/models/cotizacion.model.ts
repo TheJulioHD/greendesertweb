@@ -7,4 +7,5 @@ export class cotizacionModel{
     montomin!: number;
     montomax!: number;
     uidalmacen!: string;
+    Cantidad!: number;
 }

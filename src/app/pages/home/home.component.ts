@@ -11,8 +11,7 @@ import { empleadoModel } from 'src/app/models/empleados/empleados.models';
 })
 export class HomeComponent implements OnInit {
   title = 'GreenDesert';
-  rol!: 'operador'| 'contador' | 'admin';
-  
+  rol!: 'operador'| 'contador' |'secretaria'| 'admin';  
   constructor(private loginService: LoginserviceService,
               private router: Router,
               private auth: LoginserviceService,
