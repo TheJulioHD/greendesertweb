@@ -156,18 +156,18 @@ export class ClientesComponent implements OnInit {
 
   EliminarCliente(id:string){
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: '¿Estas seguro?',
+      text: "Una vez selecionado ya no se puede revertir esta accion!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'si deseo elimarlo!'
     }).then((result) => {
       if (result.isConfirmed) {
         Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
+          'Eliminado!',
+          'Tu archivo a sido eliminado.',
           'success'
         )
         this.clienteService.eliminarEmpledo(id).then(()=>{

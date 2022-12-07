@@ -70,11 +70,21 @@
               class="alert alert-danger">El minimo de caracteres es de 2</div>
             </div>
           </div>
+          <div class="col-md-2">
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Cantidad</label>
+              <input type="text"  formControlName="Cantidad" [(ngModel)]="Cotizacion.Cantidad" class="form-control" id="exampleInputPassword1">
+              <div *ngIf="ltsCotizacion.get('Cantidad')?.touched && ltsCotizacion.get('Cantidad')?.errors?.['required']"
+              class="alert alert-danger">Campo requerido</div>
+              <div *ngIf="ltsCotizacion.get('Cantidad')?.touched && ltsCotizacion.get('Cantidad')?.errors?.['minlength']" 
+              class="alert alert-danger">El minimo de caracteres es de 2</div>
+            </div>
+          </div>
           <div class="col-md-4">
             <div class="mb-3">
               <div class="form-floating">
                   <select class="form-select" id="floatingSelect" aria-label="Floating label select example" [(ngModel)]="Cotizacion.uidalmacen" formControlName="Material">
-                    <option [value]="item.material" *ngFor="let item of ltsalmacen">{{item.Material}}</option>
+                    <option [value]="item.id" *ngFor="let item of ltsalmacen">{{item.Material}}</option>
                   </select>
                   <div *ngIf="ltsCotizacion.get('Nombres')?.touched && ltsCotizacion.get('Material')?.errors?.['required']"
           class="alert alert-danger">Campo requerido</div>
@@ -90,7 +100,7 @@
           <button type="submit" class="btn btn-primary">Cotizar</button>
 
         </ng-template>
-        <button type="submit" class="btn btn-primary" *ngIf="!show">Cotizar</button>
+        <button type="button" (click)="aprobarcotiza()" class="btn btn-primary">aprobar Cotizacion</button>
       </form>
     </div>
       <br>
@@ -113,7 +123,10 @@
             <td>{{item.Direccion}}</td>
             <td>{{item.Material}}</td>
             <td>
-              <button type="button" class="btn btn-primary" (click)="EliminarCotiza(item.id)" *ngIf="rol==='admin'">Eliminar</button>
+              <ng-template *ngIf="rol==='admin'" >
+
+              </ng-template>
+              <button type="button" class="btn btn-primary" (click)="EliminarCotiza(item.id)" *ngIf="aprove ==false">Eliminar</button>
               <ng-template  >
                 <button type="button" class="btn btn-primary" (click)="EliminarCotiza(item.id)" disabled *ngIf="rol==='operador'">Eliminar</button>
               </ng-template>

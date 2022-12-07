@@ -95,28 +95,59 @@ id!: string | null;
       uid: String,
     }
     if(this.ltsempleado.valid){
-      this.register.registerUser(empleados.Email, empleados.Pass).then((res)=>{
-        if(res){
-          empleados.uid = res.user.uid
-          this.empleadoserivise.agregarEmpleado(empleados).then(()=>{
+      // this.register.registerUser(empleados.Email, empleados.Pass).then((res)=>{
+      //   if(res){
+      //     empleados.uid = res.user.uid
+      //     this.empleadoserivise.getall().subscribe(data =>{
+      //       if(data.Email){}
+      //     })
+      //     this.empleadoserivise.agregarEmpleado(empleados).then(()=>{
        
-            this.onResetForm()
-            Swal.fire({
-              position: 'top-end',
-              icon: 'success',
-              title: 'Empleado Registrado',
-              showConfirmButton: false,
-              timer: 1500
+      //       this.onResetForm()
+      //       Swal.fire({
+      //         position: 'top-end',
+      //         icon: 'success',
+      //         title: 'Empleado Registrado',
+      //         showConfirmButton: false,
+      //         timer: 1500
+      //       })
+          
+          
+      //   }).catch(error =>{
+      //     console.log(error)
+      //   })
+      //   }
+      //   console.log('empleado registrado')
+      // }).catch((error) => console.log(error))
+      console.log(this.ltsEmpleados)
+      if(this.ltsEmpleados.find((user) => user.Email === empleados.Email)){
+        console.log('error')
+      }else{
+        this.register.registerUser(empleados.Email, empleados.Pass).then((res)=>{
+            if(res){
+              empleados.uid = res.user.uid
+              this.empleadoserivise.getall().subscribe(data =>{
+                if(data.Email){}
+              })
+              this.empleadoserivise.agregarEmpleado(empleados).then(()=>{
+           
+                this.onResetForm()
+                Swal.fire({
+                  position: 'top-end',
+                  icon: 'success',
+                  title: 'Empleado Registrado',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+              
+              
+            }).catch(error =>{
+              console.log(error)
             })
-          
-          
-        }).catch(error =>{
-          console.log(error)
-        })
-        }
-        console.log('empleado registrado')
-      }).catch((error) => console.log(error))
-      
+            }
+            console.log('empleado registrado')
+          }).catch((error) => console.log(error))
+      }
     }else[
       Swal.fire({
         icon: 'error',
@@ -155,17 +186,30 @@ id!: string | null;
       uid: id
     }
     if(this.ltsempleado.valid){
-      this.empleadoserivise.updateEmpleado(id, empleados).then(() =>{
-        this.onResetForm();
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Empleado Actulizado',
-            showConfirmButton: false,
-            timer: 1500
-          })
-        
-      })
+    this.empleadoserivise.getEmpleado<empleadoModel>(id).subscribe(data =>{
+      if(data.Email ===empleados.Email && data.uid ===empleados.uid){
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Usuario duplicado',
+          footer: 'ingrese los datos corectos'
+        })
+      }else{
+        this.empleadoserivise.updateEmpleado(id, empleados).then(() =>{
+          this.onResetForm();
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Empleado Actulizado',
+              showConfirmButton: false,
+              timer: 1500
+            })
+          
+        })
+      }
+      
+    })
+      
     }else{
       Swal.fire({
         icon: 'error',
@@ -180,19 +224,19 @@ id!: string | null;
 
   EliminarEmpleado(id:string){
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
+      title: '¿Estas seguro?',
+      text: "Una vez selecionado ya no se puede revertir esta accion!",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'si deseo elimarlo!'
     }).then((result) => {
       if (result.isConfirmed) {
         
         Swal.fire(
-          'Deleted!',
-          'Your file has been deleted.',
+          'Eliminado!',
+          'Tu archivo a sido eliminado.',
           'success'
         )
         this.empleadoserivise.eliminarEmpledo(id).then(()=>{

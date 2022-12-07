@@ -80,7 +80,7 @@
                   <select class="form-select" id="floatingSelect" aria-label="Floating label select example" 
                   [(ngModel)]="almacen.provedor" formControlName="Proveedor">
          <option value="null" >selecciona una</option>
-         <option value="item.Nombre" *ngFor="let item of ltsproveedores" >{{item.Nombre}}</option>
+         <option [value]="item.Nombre" *ngFor="let item of ltsproveedores" >{{item.Nombre}}</option>
         
          
          </select>
